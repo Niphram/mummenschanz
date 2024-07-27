@@ -5,8 +5,8 @@
 	import DialogBase from '$lib/components/dialog-base.svelte';
 	import { SYSTEM_MAP, type SystemName } from '$lib/systems';
 
-	function createAndOpenCharacter(system: SystemName) {
-		saveCharacter(new SYSTEM_MAP[system].character()).then((id) =>
+	async function createAndOpenCharacter(system: SystemName) {
+		saveCharacter(new (await SYSTEM_MAP[system]()).default.character()).then((id) =>
 			goto(`${base}/character?id=${id}`),
 		);
 	}

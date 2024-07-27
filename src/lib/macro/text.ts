@@ -1,4 +1,4 @@
-import type { VersionedCharacter } from '$lib/systems';
+import type { VersionedCharacter } from '$lib/systems/versioned-character';
 
 import { calculateNode } from './evaluate';
 import { parse } from './parser';

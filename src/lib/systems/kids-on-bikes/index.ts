@@ -1,10 +1,10 @@
-import type { SystemData } from '$lib/systems';
+import type { SystemData } from '$lib/systems/system';
 
 import { KidsOnBikesCharacter } from './character';
 import { MIGRATION } from './migration';
 import KidsOnBikesPage from './page.svelte';
 
-export const KidsOnBikes = {
+export default {
 	character: KidsOnBikesCharacter,
 	migrations: MIGRATION,
 	page: KidsOnBikesPage,

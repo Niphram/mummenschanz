@@ -2,7 +2,6 @@ import { GenericDeserializeInto, Serialize } from 'cerialize';
 import { writable, type Writable } from 'svelte/store';
 
 import { initDB } from '$lib/idb-store';
-import { PathfinderCharacter } from '$lib/systems/pathfinder/data/character';
 import { type CharacterMigrationFn, VersionedCharacter } from '$lib/systems/versioned-character';
 import { debounce, lazy } from '$lib/utils';
 import { SYSTEM_MAP } from './systems';
@@ -43,14 +42,6 @@ export async function listCharacters(system?: string) {
 	return (system ? characters.filter((char) => char.system === system) : characters).reverse();
 }
 
-export async function addCharacter() {
-	const db = await dbInstance();
-
-	const result = await db.add('characters', Serialize(new PathfinderCharacter()));
-
-	return result;
-}
-
 export async function saveCharacter<C extends VersionedCharacter>(character: C) {
 	const db = await dbInstance();
 
@@ -73,7 +64,7 @@ export async function loadCharacter(id: string) {
 
 	if (!(char.system in SYSTEM_MAP)) throw new Error('Unknown System'); // TODO: Error Page?
 
-	const system = SYSTEM_MAP[char.system];
+	const system = (await SYSTEM_MAP[char.system]()).default;
 
 	if (char.version > system.migrations.length) throw new Error('Unknown Version'); // TODO: Error Page?
 
@@ -94,11 +85,12 @@ export async function loadCharacter(id: string) {
 
 	// TODO: Fix this mess
 	type SYSTEMS = typeof SYSTEM_MAP;
+	type SYSTEM<P extends keyof SYSTEMS> = Awaited<ReturnType<SYSTEMS[P]>>['default'];
 	type RETURN = {
 		[Property in keyof SYSTEMS]: {
-			character: Writable<SYSTEMS[Property]['character']['prototype']>;
-			Character: SYSTEMS[Property]['character']['prototype'];
-			SheetComponent: SYSTEMS[Property]['page']['prototype'];
+			character: Writable<SYSTEM<Property>['character']['prototype']>;
+			Character: SYSTEM<Property>['character']['prototype'];
+			SheetComponent: SYSTEM<Property>['page']['prototype'];
 		};
 	}[keyof SYSTEMS];
 
