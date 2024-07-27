@@ -73,7 +73,7 @@ export async function loadCharacter(id: string) {
 
 	if (!(char.system in SYSTEM_MAP)) throw new Error('Unknown System'); // TODO: Error Page?
 
-	const system = SYSTEM_MAP[char.system];
+	const system = (await SYSTEM_MAP[char.system]()).default;
 
 	if (char.version > system.migrations.length) throw new Error('Unknown Version'); // TODO: Error Page?
 
@@ -94,11 +94,12 @@ export async function loadCharacter(id: string) {
 
 	// TODO: Fix this mess
 	type SYSTEMS = typeof SYSTEM_MAP;
+	type SYSTEM<P extends keyof SYSTEMS> = Awaited<ReturnType<SYSTEMS[P]>>['default'];
 	type RETURN = {
 		[Property in keyof SYSTEMS]: {
-			character: Writable<SYSTEMS[Property]['character']['prototype']>;
-			Character: SYSTEMS[Property]['character']['prototype'];
-			SheetComponent: SYSTEMS[Property]['page']['prototype'];
+			character: Writable<SYSTEM<Property>['character']['prototype']>;
+			Character: SYSTEM<Property>['character']['prototype'];
+			SheetComponent: SYSTEM<Property>['page']['prototype'];
 		};
 	}[keyof SYSTEMS];
 

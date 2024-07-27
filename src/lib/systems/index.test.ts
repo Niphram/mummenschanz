@@ -7,8 +7,10 @@ import { VersionedCharacter } from './versioned-character';
 describe('Systems', () => {
 	const systems = Object.entries(SYSTEM_MAP);
 
-	for (const [system, { character, migrations }] of systems) {
-		describe(system, () => {
+	for (const [system, systemImport] of systems) {
+		describe(system, async () => {
+			const { character, migrations } = (await systemImport()).default;
+
 			describe('Character', () => {
 				it('should extend VersionedCharacter', () => {
 					expect(new character()).toBeInstanceOf(VersionedCharacter);
