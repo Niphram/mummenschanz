@@ -2,7 +2,6 @@ import { GenericDeserializeInto, Serialize } from 'cerialize';
 import { writable, type Writable } from 'svelte/store';
 
 import { initDB } from '$lib/idb-store';
-import { PathfinderCharacter } from '$lib/systems/pathfinder/data/character';
 import { type CharacterMigrationFn, VersionedCharacter } from '$lib/systems/versioned-character';
 import { debounce, lazy } from '$lib/utils';
 import { SYSTEM_MAP } from './systems';
@@ -41,14 +40,6 @@ export async function listCharacters(system?: string) {
 	const characters = await db.getAllFromIndex('characters', 'updated_idx');
 
 	return (system ? characters.filter((char) => char.system === system) : characters).reverse();
-}
-
-export async function addCharacter() {
-	const db = await dbInstance();
-
-	const result = await db.add('characters', Serialize(new PathfinderCharacter()));
-
-	return result;
 }
 
 export async function saveCharacter<C extends VersionedCharacter>(character: C) {
