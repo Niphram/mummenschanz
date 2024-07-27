@@ -1,13 +1,13 @@
 {
-	"name": "Pfadfinder",
-	"short_name": "Pfadfinder",
-	"description": "Charactersheet for Pathfinder 1st Edition",
+	"name": "Mummenschanz",
+	"short_name": "Mummenschanz",
+	"description": "Your digital multi-system charactersheet",
 	"theme_color": "#DBCA9A",
 	"background_color": "#ECE3CA",
 	"display": "standalone",
 	"scope": "./",
 	"start_url": "./",
-	"id": "pfadfinder",
+	"id": "mummenschanz",
 	"icons": [
 		{
 			"src": "./icons/512.png",
