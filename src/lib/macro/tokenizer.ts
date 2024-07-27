@@ -9,19 +9,19 @@ export enum TokenKind {
 	LParen,
 	RParen,
 	Period,
-	Space
+	Space,
 }
 
 const lexer = buildLexer([
 	[true, /^\d+/g, TokenKind.Number],
 	[true, /^[\w\d]+/g, TokenKind.String],
-	[true, /^[+\-*/]/g, TokenKind.Op],
+	[true, /^[+\-*%/]/g, TokenKind.Op],
 	[true, /^,/g, TokenKind.Comma],
 	[true, /^@/g, TokenKind.At],
 	[true, /^\(/g, TokenKind.LParen],
 	[true, /^\)/g, TokenKind.RParen],
 	[true, /^\./g, TokenKind.Period],
-	[false, /^\s+/g, TokenKind.Space]
+	[false, /^\s+/g, TokenKind.Space],
 ]);
 
 export function tokenize(input: string) {

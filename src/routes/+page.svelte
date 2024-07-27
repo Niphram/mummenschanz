@@ -1,0 +1,80 @@
+<script lang="ts">
+	import { base } from '$app/paths';
+
+	import { deleteCharacter, listCharacters } from '$lib/character-store';
+	import { openDialog } from '$lib/components/dialog.svelte';
+	import CreateCharacterDialog from '$lib/dialogs/create-character-dialog.svelte';
+	import { t } from '$lib/i18n';
+
+	let selectedSystem: string | undefined;
+
+	$: characterList = listCharacters(selectedSystem);
+
+	async function deleteChar(id: string) {
+		await deleteCharacter(id);
+
+		characterList = listCharacters(selectedSystem);
+	}
+</script>
+
+<div class="flex flex-col">
+	<div class="sticky top-0 z-40 flex h-20 w-full flex-col bg-base-200 drop-shadow-xl">
+		<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
+			<p class="text-lg font-bold">Mummenschanz (Work in Progress)</p>
+		</div>
+	</div>
+
+	<div class="flex-none p-4">
+		{#await characterList}
+			<div class="flex h-full w-full items-center justify-center">
+				<div class="loading loading-dots loading-lg"></div>
+			</div>
+		{:then characters}
+			<h1 class="divider text-lg">Characters</h1>
+
+			<div class="flex flex-col gap-4">
+				{#each characters as char}
+					<div class="flex flex-row gap-2">
+						<a
+							href="{base}/character?id={char.id}"
+							class="btn flex min-w-0 flex-auto flex-row flex-nowrap"
+						>
+							<p class="flex-grow truncate text-lg">
+								{char.name || $t('general.character.unnamed_character')}
+							</p>
+							<p class="badge badge-neutral badge-outline badge-md whitespace-nowrap">
+								{char.system}
+							</p>
+						</a>
+
+						<button on:click={() => deleteChar(char.id)} class="btn-xl btn btn-warning">
+							Delete
+						</button>
+					</div>
+				{:else}
+					<p>No Characters</p>
+				{/each}
+			</div>
+		{/await}
+
+		<div class="h-16" />
+	</div>
+
+	<div class="fixed bottom-4 right-4">
+		<button
+			class="btn btn-circle btn-primary"
+			on:click={() => openDialog(CreateCharacterDialog, {})}
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke-width="1.5"
+				stroke="currentColor"
+				class="size-6"
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+			</svg>
+		</button>
+	</div>
+</div>

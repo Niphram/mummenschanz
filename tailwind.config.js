@@ -2,14 +2,14 @@ const commonTheme = {
 	'--rounded-box': '0.4rem',
 	'--rounded-btn': '0.4rem',
 	'--rounded-badge': '0.4rem',
-	'--tab-radius': '0.4rem'
+	'--tab-radius': '0.4rem',
 };
 
 /** @type {import('tailwindcss').Config} */
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		extend: {}
+		extend: {},
 	},
 	plugins: [require('daisyui')],
 	daisyui: {
@@ -31,8 +31,8 @@ export default {
 					success: '#16A34A',
 					warning: '#D97706',
 					error: 'oklch(65.72% 0.199 27.33)',
-					...commonTheme
-				}
+					...commonTheme,
+				},
 			},
 			{
 				dark: {
@@ -48,9 +48,9 @@ export default {
 					success: '#50FA7B',
 					warning: '#FCD34D',
 					error: 'FF5555',
-					...commonTheme
-				}
-			}
-		]
-	}
+					...commonTheme,
+				},
+			},
+		],
+	},
 };

@@ -1,10 +1,11 @@
-import type { Character } from '$lib/data';
+import type { VersionedCharacter } from '$lib/systems';
+
 import { calculateNode } from './evaluate';
 import { parse } from './parser';
 
 const MACRO = /{{(.*?)}}/g;
 
-export function parseTextWithMacros(input: string, char: Character): string {
+export function parseTextWithMacros<C extends VersionedCharacter>(input: string, char: C): string {
 	const parsed = input.replaceAll(MACRO, (match) => {
 		const macro = match.substring(2, match.length - 2);
 

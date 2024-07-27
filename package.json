@@ -25,7 +25,6 @@
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.35.1",
-		"idb-keyval": "^6.2.1",
 		"moosmann-svelte": "^0.4.1",
 		"nanoid": "^5.0.4",
 		"postcss": "^8.4.33",
@@ -46,7 +45,6 @@
 	"dependencies": {
 		"cerialize": "^0.1.18",
 		"idb": "^8.0.0",
-		"idb-keyval": "^6.2.1",
 		"moosmann-svelte": "^0.4.1",
 		"nanoid": "^5.0.4",
 		"proxy-deep": "^4.0.1",
