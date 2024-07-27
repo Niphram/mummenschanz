@@ -1,7 +1,7 @@
 > [!NOTE]
 > Fork of my character sheet for Pathfinder 1st edition (https://github.com/Niphram/pfadfinder).
 > This new version ist also under development and will support multiple systems and characters.
-> As soon as feature parity is achieved, it will superseed the old project
+> As soon as feature parity is achieved, it will supersede the old project
 
 # Mummenschanz
 
