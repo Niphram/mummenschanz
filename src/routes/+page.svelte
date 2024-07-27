@@ -2,9 +2,11 @@
 	import { base } from '$app/paths';
 
 	import { deleteCharacter, listCharacters } from '$lib/character-store';
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { dialogContext } from '$lib/components/dialog-provider.svelte';
 	import CreateCharacterDialog from '$lib/dialogs/create-character-dialog.svelte';
 	import { t } from '$lib/i18n';
+
+	const { openDialog } = dialogContext();
 
 	let selectedSystem: string | undefined;
 

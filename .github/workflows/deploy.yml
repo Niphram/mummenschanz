@@ -1,19 +1,8 @@
 name: Deploy to GitHub Pages
 
 on:
-  pull_request:
-  pull_request_target:
-    types:
-      - opened
-      - synchronize
-      - reopened
-      - ready_for_review
   push:
     branches:
-      - master
-      - main
-      - '*'
-    tags-ignore:
       - '*'
 
 jobs:

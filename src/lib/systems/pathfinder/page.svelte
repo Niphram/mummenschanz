@@ -1,12 +1,14 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { dialogContext } from '$lib/components/dialog-provider.svelte';
 
 	import { setChar } from './context';
 	import type { PathfinderCharacter } from './data';
 	import PageDialog from './dialogs/page-dialog.svelte';
 	import CharacterPage from './page/character-page.svelte';
+
+	const { openDialog } = dialogContext();
 
 	$: pages = [{ key: 'character', component: CharacterPage, active: true }] as const;
 
