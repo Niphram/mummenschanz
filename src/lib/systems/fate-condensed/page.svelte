@@ -5,7 +5,7 @@
 	import Header from '$lib/atoms/header.svelte';
 	import TextArea from '$lib/atoms/text-area.svelte';
 	import TextInput from '$lib/atoms/text-input.svelte';
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { dialogContext } from '$lib/components/dialog-provider.svelte';
 	import { t } from '$lib/i18n';
 	import { withSign } from '$lib/utils';
 
@@ -15,6 +15,8 @@
 	import NameDialog from './dialogs/name-dialog.svelte';
 	import SkillConfigDialog from './dialogs/skill-config-dialog.svelte';
 	import VitalsDialog from './dialogs/vitals-dialog.svelte';
+
+	const { openDialog } = dialogContext();
 
 	export let c: Writable<FateCondensedCharacter>;
 

@@ -2,9 +2,10 @@ import { GenericDeserializeInto, Serialize } from 'cerialize';
 import { writable, type Writable } from 'svelte/store';
 
 import { initDB } from '$lib/idb-store';
-import { type CharacterMigrationFn, SYSTEM_MAP, VersionedCharacter } from '$lib/systems';
 import { PathfinderCharacter } from '$lib/systems/pathfinder/data/character';
+import { type CharacterMigrationFn, VersionedCharacter } from '$lib/systems/versioned-character';
 import { debounce, lazy } from '$lib/utils';
+import { SYSTEM_MAP } from './systems';
 
 function migrateCharacter(data: VersionedCharacter, migrations: CharacterMigrationFn[]) {
 	return migrations
