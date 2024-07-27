@@ -1,9 +1,8 @@
-import type { Character } from '$lib/data';
-import { Derive } from '$lib/data/macros';
-import { Macro } from '$lib/data/macros/macro';
+import { Derive } from './derive';
+import { Macro } from './macro';
 import { NodeType, parse, type Node } from './parser';
 
-function calcAttribute(path: string[], char: Character): number {
+function calcAttribute<C extends NonNullable<unknown>>(path: string[], char: C): number {
 	try {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const val: unknown = path.reduce((c, p) => c[p], char as Record<string, any>);
@@ -46,7 +45,7 @@ function calcBinary(op: '+' | '-' | '*' | '/' | '%', left: number, right: number
 
 function calcFunc(
 	func: undefined | 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp' | 'abs' | 'step',
-	values: number[]
+	values: number[],
 ): number {
 	switch (func) {
 		case undefined:
@@ -70,7 +69,7 @@ function calcFunc(
 	}
 }
 
-export function calculateNode(node: Node, char: Character): number {
+export function calculateNode<C extends NonNullable<unknown>>(node: Node, char: C): number {
 	switch (node.type) {
 		case NodeType.Error:
 			return NaN;
@@ -85,12 +84,12 @@ export function calculateNode(node: Node, char: Character): number {
 		case NodeType.Func:
 			return calcFunc(
 				node.func,
-				node.nodes.map((n) => calculateNode(n, char))
+				node.nodes.map((n) => calculateNode(n, char)),
 			);
 	}
 }
 
-export function printNode(node: Node, char: Character): string {
+export function printNode<C extends NonNullable<unknown>>(node: Node, char: C): string {
 	switch (node.type) {
 		case NodeType.Error:
 			return '[ERR]';
