@@ -2,13 +2,11 @@
 	import type { Writable } from 'svelte/store';
 
 	import Divider from '$lib/atoms/divider.svelte';
+	import Icon from '$lib/atoms/icon.svelte';
 	import IntegerInput from '$lib/atoms/integer-input.svelte';
+	import DialogBase from '$lib/components/dialog-base.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import { t } from '$lib/i18n';
-	import Add from '$lib/icons/add.svelte';
-	import DragHandle from '$lib/icons/drag-handle.svelte';
-	import Trash from '$lib/icons/trash.svelte';
-	import DialogBase from '$lib/components/dialog-base.svelte';
 
 	import { Skill, type FateCondensedCharacter } from '../character';
 
@@ -42,7 +40,7 @@
 
 		<div class="flex w-full flex-row gap-2">
 			<div class="drag-handle ml-2 flex w-6 items-center justify-center" role="button" tabindex="0">
-				<DragHandle />
+				<Icon type="DragHandle" class="size-6" />
 			</div>
 
 			<div class="form-control w-full">
@@ -62,14 +60,14 @@
 				class="btn btn-square btn-warning btn-sm text-warning-content"
 				on:click|preventDefault={() => removeSkill(index)}
 			>
-				<Trash class="size-5" />
+				<Icon type="Remove" class="size-4" />
 			</button>
 		</div>
 	</SortableList>
 
 	<Divider>
 		<button class="btn btn-circle btn-primary btn-sm" on:click|preventDefault={addSkill}>
-			<Add class="size-6" />
+			<Icon type="Add" class="size-6" />
 		</button>
 	</Divider>
 </DialogBase>
