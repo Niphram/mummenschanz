@@ -44,7 +44,7 @@ export type SkillKey = (typeof SKILL_KEYS)[number];
 @inheritSerialization(VersionedCharacter)
 export class KidsOnBikesCharacter extends VersionedCharacter {
 	constructor() {
-		super('kids-on-bikes', MIGRATION.length);
+		super('kids_on_bikes', MIGRATION.length);
 	}
 
 	@autoserialize

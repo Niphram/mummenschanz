@@ -25,7 +25,7 @@ export class Skill {
 @inheritSerialization(VersionedCharacter)
 export class FateCondensedCharacter extends VersionedCharacter {
 	constructor() {
-		super('fate-condensed', FATE_CONDENSED_CHAR_MIGRATIONS.length);
+		super('fate_condensed', FATE_CONDENSED_CHAR_MIGRATIONS.length);
 	}
 
 	@autoserialize

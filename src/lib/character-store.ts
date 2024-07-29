@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { GenericDeserializeInto, Serialize } from 'cerialize';
 import { writable, type Writable } from 'svelte/store';
 
@@ -35,6 +36,8 @@ const dbInstance = lazy(() =>
 );
 
 export async function listCharacters(system?: string) {
+	if (!browser) return [];
+
 	const db = await dbInstance();
 
 	const characters = await db.getAllFromIndex('characters', 'updated_idx');

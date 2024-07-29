@@ -17,7 +17,15 @@ export default {
 			auto: 'Auto',
 		},
 	},
+	pathfinder: {
+		system_name: 'Pathfinder',
+	},
+	kids_on_bikes: {
+		system_name: 'Kids on Bikes',
+	},
 	fate_condensed: {
+		system_name: 'Fate',
+
 		aspects: 'Aspects',
 		vitals: 'Vitals',
 		stunts: 'Stunts',

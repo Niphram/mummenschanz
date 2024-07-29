@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 
+	import Divider from '$lib/atoms/divider.svelte';
+	import Icon from '$lib/atoms/icon.svelte';
 	import { deleteCharacter, listCharacters } from '$lib/character-store';
 	import { dialogContext } from '$lib/components/dialog-provider.svelte';
 	import CreateCharacterDialog from '$lib/dialogs/create-character-dialog.svelte';
@@ -19,34 +21,39 @@
 	}
 </script>
 
-<div class="flex flex-col">
-	<div class="sticky top-0 z-40 flex h-20 w-full flex-col bg-base-200 drop-shadow-xl">
+<div class="flex min-h-screen flex-col items-stretch gap-4">
+	<div class="sticky top-0 z-40 flex w-full flex-col bg-base-200 drop-shadow-xl">
 		<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
 			<p class="text-lg font-bold">Mummenschanz (Work in Progress)</p>
 		</div>
 	</div>
 
-	<div class="flex-none p-4">
-		{#await characterList}
-			<div class="flex h-full w-full items-center justify-center">
-				<div class="loading loading-dots loading-lg"></div>
-			</div>
-		{:then characters}
-			<h1 class="divider text-lg">Characters</h1>
+	<div class="flex grow flex-col items-center gap-2 p-4">
+		<button class="btn btn-primary" on:click={() => openDialog(CreateCharacterDialog, {})}>
+			<Icon type="Add" class="size-6" />
+			Create new Character
+		</button>
 
-			<div class="flex flex-col gap-4">
+		<Divider>Saved Characters</Divider>
+
+		<div class="flex w-full max-w-2xl flex-col gap-4">
+			{#await characterList}
+				<div class="loading loading-dots loading-lg" />
+			{:then characters}
 				{#each characters as char}
-					<div class="flex flex-row gap-2">
+					<div class="flex grow flex-row gap-2">
 						<a
+							class="btn flex min-w-0 shrink grow flex-row flex-nowrap text-left"
 							href="{base}/character?id={char.id}"
-							class="btn flex min-w-0 flex-auto flex-row flex-nowrap"
 						>
-							<p class="flex-grow truncate text-lg">
+							<div class="flex-auto truncate sm:text-lg">
 								{char.name || $t('general.character.unnamed_character')}
-							</p>
-							<p class="badge badge-neutral badge-outline badge-md whitespace-nowrap">
-								{char.system}
-							</p>
+							</div>
+							<span
+								class="badge badge-info badge-sm justify-self-end whitespace-nowrap uppercase sm:badge-md"
+							>
+								{$t(`${char.system}.system_name`)}
+							</span>
 						</a>
 
 						<button on:click={() => deleteChar(char.id)} class="btn-xl btn btn-warning">
@@ -54,29 +61,19 @@
 						</button>
 					</div>
 				{:else}
-					<p>No Characters</p>
+					<p class="text-center">No characters found, create one!</p>
 				{/each}
-			</div>
-		{/await}
-
-		<div class="h-16" />
+			{/await}
+		</div>
 	</div>
 
-	<div class="fixed bottom-4 right-4">
-		<button
-			class="btn btn-circle btn-primary"
-			on:click={() => openDialog(CreateCharacterDialog, {})}
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
-				stroke="currentColor"
-				class="size-6"
-			>
-				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-			</svg>
-		</button>
-	</div>
+	<footer class="footer items-center gap-y-4 self-end bg-neutral p-4 text-neutral-content">
+		<aside class="grid-flow-col items-center">
+			<p>&copy; 2024 Niphram - All right reserved</p>
+		</aside>
+		<nav class="grid-flow-col gap-4 md:self-center md:justify-self-end">
+			<a href="{base}/privacy" class="link">Privacy Policy</a>
+			<a href="https://github.com/Niphram/mummenschanz" class="link">Github</a>
+		</nav>
+	</footer>
 </div>
