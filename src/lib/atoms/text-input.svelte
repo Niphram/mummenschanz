@@ -15,7 +15,7 @@
 	<input
 		{name}
 		{placeholder}
-		class="input input-bordered w-full"
+		class="input input-bordered w-full bg-base-200"
 		bind:value
 		class:input-sm={small}
 	/>

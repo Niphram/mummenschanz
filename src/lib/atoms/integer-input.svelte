@@ -29,7 +29,7 @@
 		{name}
 		type="number"
 		{placeholder}
-		class="input input-bordered w-full"
+		class="input input-bordered w-full bg-base-200"
 		{min}
 		{max}
 		class:input-sm={small}

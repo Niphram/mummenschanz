@@ -19,7 +19,7 @@
 	<textarea
 		{name}
 		{placeholder}
-		class="textarea textarea-bordered w-full"
+		class="textarea textarea-bordered w-full bg-base-200"
 		style:resize
 		{rows}
 		bind:value

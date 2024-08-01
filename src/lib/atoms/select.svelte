@@ -22,7 +22,12 @@
 			<span class="label-text">{label}</span>
 		</label>
 	{/if}
-	<select {name} class="select select-bordered w-full" class:select-error={error} bind:value>
+	<select
+		{name}
+		class="select select-bordered w-full bg-base-200"
+		class:select-error={error}
+		bind:value
+	>
 		<slot name="once" />
 
 		{#each options as option (option)}
