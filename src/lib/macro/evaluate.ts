@@ -1,6 +1,6 @@
 import { isDerive } from './derive';
 import { isMacro } from './macro';
-import { NodeType, parse, type Node } from './parser';
+import { NodeType, type Node } from './parser';
 
 function calcAttribute<C extends NonNullable<unknown>>(path: string[], char: C): number {
 	try {
@@ -14,8 +14,6 @@ function calcAttribute<C extends NonNullable<unknown>>(path: string[], char: C):
 		switch (typeof val) {
 			case 'number':
 				return val;
-			case 'string':
-				return calculateNode(parse(val), char);
 			default:
 				return NaN;
 		}
