@@ -2,6 +2,7 @@
 	import type { Writable } from 'svelte/store';
 
 	import { dialogContext } from '$lib/components/dialog-provider.svelte';
+	import type { Proxied } from '$lib/systems';
 
 	import { setChar } from './context';
 	import type { PathfinderCharacter } from './data';
@@ -12,7 +13,7 @@
 
 	$: pages = [{ key: 'character', component: CharacterPage, active: true }] as const;
 
-	export let c: Writable<PathfinderCharacter>;
+	export let c: Writable<Proxied<PathfinderCharacter>>;
 	setChar(c);
 </script>
 

@@ -1,21 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { Derive } from './derive';
+import { derive, isDerive } from './derive';
 
-describe('Derive.eval', () => {
-	it('should call callback with character', () => {
-		const char = vi.fn();
-		const cb = vi.fn();
+describe('derive', () => {
+	it('should return tagged version of the function', () => {
+		const testFn = vi.fn();
 
-		new Derive(cb).eval(char);
+		const deriveTest = derive(testFn);
 
-		expect(cb).toHaveBeenCalledWith(char);
-	});
-
-	it('should return callback result', () => {
-		const char = vi.fn();
-		const cb = vi.fn();
-
-		expect(new Derive(cb).eval(char)).toBe(cb());
+		expect(isDerive(deriveTest)).toBe(true);
 	});
 });

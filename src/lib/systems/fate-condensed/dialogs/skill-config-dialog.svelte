@@ -7,10 +7,11 @@
 	import DialogBase from '$lib/components/dialog-base.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import { t } from '$lib/i18n';
+	import type { Proxied } from '$lib/systems';
 
 	import { Skill, type FateCondensedCharacter } from '../character';
 
-	export let c: Writable<FateCondensedCharacter>;
+	export let c: Writable<Proxied<FateCondensedCharacter>>;
 
 	function removeSkill(index: number) {
 		$c.skills.splice(index, 1);

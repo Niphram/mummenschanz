@@ -1,5 +1,5 @@
-import { Derive } from './derive';
-import { Macro } from './macro';
+import { isDerive } from './derive';
+import { isMacro } from './macro';
 import { NodeType, parse, type Node } from './parser';
 
 function calcAttribute<C extends NonNullable<unknown>>(path: string[], char: C): number {
@@ -7,8 +7,8 @@ function calcAttribute<C extends NonNullable<unknown>>(path: string[], char: C):
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const val: unknown = path.reduce((c, p) => c[p], char as Record<string, any>);
 
-		if (val instanceof Macro || val instanceof Derive) {
-			return val.eval(char);
+		if (isDerive(val) || isMacro(val)) {
+			return val(char);
 		}
 
 		switch (typeof val) {

@@ -1,7 +1,7 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
 
-import { Derive } from '$lib/macro/derive';
-import { Macro, serializeMacro } from '$lib/macro/macro';
+import { derive } from '$lib/macro/derive';
+import { macro, serializeMacro } from '$lib/macro/macro';
 import { mapSum } from '$lib/utils';
 
 import type { AbilityKey } from './ability';
@@ -61,10 +61,10 @@ export class Skill {
 	ranks = 0;
 
 	@serializeMacro
-	misc = new Macro('0');
+	misc = macro('0');
 
 	@serializeMacro
-	temp = new Macro('0');
+	temp = macro('0');
 
 	@autoserialize
 	classSkill = false;
@@ -72,12 +72,12 @@ export class Skill {
 	@autoserialize
 	notes = '';
 
-	readonly mod = new Derive(
+	readonly mod = derive(
 		(c: PathfinderCharacter) =>
-			c[this.ability].mod.eval(c) +
+			c[this.ability].mod(c) +
 			this.ranks +
-			this.misc.eval(c) +
-			this.temp.eval(c) +
+			this.misc(c) +
+			this.temp(c) +
 			(this.classSkill && this.ranks > 0 ? 3 : 0),
 	);
 

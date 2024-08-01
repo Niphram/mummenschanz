@@ -19,7 +19,7 @@
 {#if id}
 	{#await loadCharacter(id)}
 		loading
-	{:then { character, SheetComponent }}
-		<svelte:component this={SheetComponent} c={character} />
+	{:then data}
+		<svelte:component this={data.SheetComponent} c={data.character} />
 	{/await}
 {/if}

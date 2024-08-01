@@ -1,4 +1,4 @@
-import type { SystemData } from '$lib/systems/system';
+import type { SystemData } from '$lib/systems/system-data';
 
 import { KidsOnBikesCharacter } from './character';
 import { MIGRATION } from './migration';

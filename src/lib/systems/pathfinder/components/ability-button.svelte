@@ -8,9 +8,9 @@
 
 	export let key: AbilityKey;
 
-	$: mod = $c[key].mod.eval($c);
-	$: total = $c[key].total.eval($c);
-	$: temp = $c[key].temp.eval($c);
+	$: mod = $c[key].mod();
+	$: total = $c[key].total();
+	$: temp = $c[key].temp();
 
 	$: notes = $c[key].notes;
 </script>

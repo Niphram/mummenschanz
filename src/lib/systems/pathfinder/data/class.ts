@@ -1,6 +1,6 @@
 import { autoserialize, autoserializeAs, serialize } from 'cerialize';
 
-import { Derive } from '$lib/macro/derive';
+import { derive } from '$lib/macro/derive';
 import { mapSum } from '$lib/utils';
 
 import type { PathfinderCharacter } from './character';
@@ -77,8 +77,8 @@ export class Classes {
 		return mapSum(this.list, (c) => c.will);
 	}
 
-	readonly ranks = new Derive((c: PathfinderCharacter) => {
+	readonly ranks = derive((c: PathfinderCharacter) => {
 		const classRanks = mapSum(this.list, (c) => c.levelRanks * c.level + c.miscRanks);
-		return classRanks + c.int.mod.eval(c) * c.classes.levels;
+		return classRanks + c.int.mod(c) * c.classes.levels;
 	});
 }

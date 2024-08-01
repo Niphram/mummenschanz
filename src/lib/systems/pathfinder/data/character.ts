@@ -1,6 +1,6 @@
 import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize';
 
-import { VersionedCharacter, type CharacterMigrationFn } from '$lib/systems/versioned-character';
+import { VersionedCharacter, type CharacterMigrationFn } from '$lib/systems';
 
 import { Ability } from './ability';
 import { ArmorClass } from './armorclass';

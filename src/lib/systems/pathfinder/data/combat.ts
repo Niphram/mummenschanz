@@ -1,8 +1,8 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
 import { nanoid } from 'nanoid';
 
-import { Derive } from '$lib/macro/derive';
-import { Macro, serializeMacro } from '$lib/macro/macro';
+import { derive } from '$lib/macro/derive';
+import { macro, serializeMacro } from '$lib/macro/macro';
 
 import type { AbilityKey } from './ability';
 import type { PathfinderCharacter } from './character';
@@ -22,33 +22,31 @@ const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
 
 export class SpellResistance {
 	@serializeMacro
-	base = new Macro('0');
+	base = macro('0');
 
 	@serializeMacro
-	misc = new Macro('0');
+	misc = macro('0');
 
 	@autoserialize
 	notes = '';
 
-	readonly total = new Derive(
-		(c: PathfinderCharacter) => c.combat.sr.base.eval(c) + c.combat.sr.misc.eval(c),
-	);
+	readonly total = derive((c: PathfinderCharacter) => c.combat.sr.base(c) + c.combat.sr.misc(c));
 }
 
 export class BaseAttackBonus {
 	@autoserialize
 	notes = '';
 
-	readonly mod = new Derive((c: PathfinderCharacter) => c.classes.bab);
+	readonly mod = derive((c: PathfinderCharacter) => c.classes.bab);
 }
 
 export class CombatManeuverBonus {
 	@autoserialize
 	notes = '';
 
-	readonly mod = new Derive((c: PathfinderCharacter) => {
+	readonly mod = derive((c: PathfinderCharacter) => {
 		const { ability, mod } = sizeModifiers[c.race.size];
-		return c.combat.bab.mod.eval(c) + mod + c[ability].mod.eval(c);
+		return c.combat.bab.mod(c) + mod + c[ability].mod(c);
 	});
 }
 
@@ -56,9 +54,9 @@ export class CombatManeuverDefense {
 	@autoserialize
 	notes = '';
 
-	readonly mod = new Derive((c: PathfinderCharacter) => {
+	readonly mod = derive((c: PathfinderCharacter) => {
 		const { mod } = sizeModifiers[c.race.size];
-		return 10 + c.combat.bab.mod.eval(c) + c.str.mod.eval(c) + c.dex.mod.eval(c) + mod;
+		return 10 + c.combat.bab.mod(c) + c.str.mod(c) + c.dex.mod(c) + mod;
 	});
 }
 
@@ -81,7 +79,7 @@ export class AttackRoll {
 	abilityModifier: AbilityKey | 'none' = 'none';
 
 	@serializeMacro
-	bonusModifier = new Macro('0');
+	bonusModifier = macro('0');
 
 	@autoserialize
 	versus = 'AC';
@@ -92,20 +90,20 @@ export class AttackRoll {
 	@autoserialize
 	range = '';
 
-	readonly baseModValue = new Derive((c: PathfinderCharacter) =>
+	readonly baseModValue = derive((c: PathfinderCharacter) =>
 		// TODO: Check this
 		this.baseModifier === 'none' ? 0
-		: this.baseModifier === 'babMax' ? c.combat.bab.mod.eval(c)
-		: this.baseModifier === 'babFull' ? c.combat.bab.mod.eval(c)
-		: this.baseModifier === 'cmb' ? c.combat.cmb.mod.eval(c)
-		: this.baseModifier === 'meelee' ? c.combat.bab.mod.eval(c) + c.str.mod.eval(c)
-		: this.baseModifier === 'ranged' ? c.combat.bab.mod.eval(c) + c.dex.mod.eval(c)
+		: this.baseModifier === 'babMax' ? c.combat.bab.mod(c)
+		: this.baseModifier === 'babFull' ? c.combat.bab.mod(c)
+		: this.baseModifier === 'cmb' ? c.combat.cmb.mod(c)
+		: this.baseModifier === 'meelee' ? c.combat.bab.mod(c) + c.str.mod(c)
+		: this.baseModifier === 'ranged' ? c.combat.bab.mod(c) + c.dex.mod(c)
 		: this.baseModifier === 'flurryOfBlows' ? 0
 		: 0,
 	);
 
-	readonly abilityModValue = new Derive((c: PathfinderCharacter) =>
-		this.abilityModifier !== 'none' ? c[this.abilityModifier].mod.eval(c) : 0,
+	readonly abilityModValue = derive((c: PathfinderCharacter) =>
+		this.abilityModifier !== 'none' ? c[this.abilityModifier].mod(c) : 0,
 	);
 }
 
@@ -141,10 +139,10 @@ export class Attack {
 	@autoserialize
 	notes = '';
 
-	readonly attackBonus = new Derive((c: PathfinderCharacter) => {
-		let total = this.attack.baseModValue.eval(c);
-		total += this.attack.abilityModValue.eval(c);
-		const bonus = this.attack.bonusModifier.eval(c) ?? 0;
+	readonly attackBonus = derive((c: PathfinderCharacter) => {
+		let total = this.attack.baseModValue(c);
+		total += this.attack.abilityModValue(c);
+		const bonus = this.attack.bonusModifier(c) ?? 0;
 		total += Number.isNaN(bonus) ? 0 : bonus;
 		return total;
 	});

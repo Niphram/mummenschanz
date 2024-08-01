@@ -6,10 +6,11 @@
 	import Select from '$lib/atoms/select.svelte';
 	import DialogBase from '$lib/components/dialog-base.svelte';
 	import { t } from '$lib/i18n';
+	import type { Proxied } from '$lib/systems';
 
 	import { SHOW_OPTIONS, type FateCondensedCharacter } from '../character';
 
-	export let c: Writable<FateCondensedCharacter>;
+	export let c: Writable<Proxied<FateCondensedCharacter>>;
 
 	$: skills = $c.skills.filter((s) => s.name);
 

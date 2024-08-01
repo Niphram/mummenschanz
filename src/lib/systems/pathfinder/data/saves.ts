@@ -1,7 +1,7 @@
 import { autoserialize } from 'cerialize';
 
-import { Derive } from '$lib/macro/derive';
-import { Macro, serializeMacro } from '$lib/macro/macro';
+import { derive } from '$lib/macro/derive';
+import { macro, serializeMacro } from '$lib/macro/macro';
 
 import type { AbilityKey } from './ability';
 import type { PathfinderCharacter } from './character';
@@ -20,20 +20,17 @@ export class Save {
 	ability: AbilityKey;
 
 	@serializeMacro
-	bonus = new Macro('0');
+	bonus = macro('0');
 
 	@serializeMacro
-	misc = new Macro('0');
+	misc = macro('0');
 
 	@autoserialize
 	notes = '';
 
-	readonly mod = new Derive(
+	readonly mod = derive(
 		(c: PathfinderCharacter) =>
-			c.classes[this.key] +
-			c[this.ability].mod.eval(c) +
-			c[this.key].bonus.eval(c) +
-			c[this.key].misc.eval(c),
+			c.classes[this.key] + c[this.ability].mod(c) + c[this.key].bonus(c) + c[this.key].misc(c),
 	);
 
 	constructor(private key: SaveKey) {

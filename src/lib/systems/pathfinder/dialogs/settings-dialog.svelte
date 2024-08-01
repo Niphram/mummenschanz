@@ -2,12 +2,13 @@
 	import type { Writable } from 'svelte/store';
 
 	import { isDarkMode, toggleDarkMode } from '$lib/components/theme-changer.svelte';
+	import type { Proxied } from '$lib/systems';
 
 	import type { PathfinderCharacter } from '../data';
 
 	export const title = '';
 
-	export let c: Writable<PathfinderCharacter>;
+	export let c: Writable<Proxied<PathfinderCharacter>>;
 </script>
 
 <div class="flex flex-col gap-2">

@@ -4,6 +4,7 @@
 
 	import DialogBase from '$lib/components/dialog-base.svelte';
 	import { dialogContext } from '$lib/components/dialog-provider.svelte';
+	import type { Proxied } from '$lib/systems';
 
 	import type { PathfinderCharacter } from '../data';
 	import SettingsDialog from './settings-dialog.svelte';
@@ -12,7 +13,7 @@
 
 	const pages = [{ key: 'character', enabled: true }] as const;
 
-	export let c: Writable<PathfinderCharacter>;
+	export let c: Writable<Proxied<PathfinderCharacter>>;
 </script>
 
 <DialogBase let:closeDialog>

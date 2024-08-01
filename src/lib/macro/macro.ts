@@ -1,7 +1,19 @@
 import { autoserializeAs } from 'cerialize';
 
+import { isTagged, tag, type Tagged } from '$lib/utils';
+
 import { calculateNode } from './evaluate';
 import { parse, type Node } from './parser';
+
+export const MACRO_SYMBOL = Symbol('macro');
+
+export type Macro = Tagged<
+	{
+		(char: NonNullable<unknown>): number;
+		expr: string;
+	},
+	typeof MACRO_SYMBOL
+>;
 
 export const serializeMacro = autoserializeAs({
 	Serialize(instance: Macro): string {
@@ -9,26 +21,28 @@ export const serializeMacro = autoserializeAs({
 	},
 
 	Deserialize(expr: string): Macro {
-		return new Macro(expr);
+		return macro(expr);
 	},
 });
 
-export class Macro {
-	private oldExpr?: string;
+export function macro(expr: string): Macro {
+	let oldExpr: string | unknown;
+	let node: Node | undefined;
 
-	private _node?: Node;
-	private get node() {
-		if (!this._node || this.expr !== this.oldExpr) {
-			this._node = parse(this.expr);
-			this.oldExpr = this.expr;
+	const macroEval = (char: NonNullable<unknown>) => {
+		if (!node || macroEval.expr !== oldExpr) {
+			node = parse(macroEval.expr);
+			oldExpr = macroEval.expr;
 		}
 
-		return this._node;
-	}
+		return calculateNode(node, char);
+	};
 
-	eval<C extends NonNullable<unknown>>(char: C) {
-		return calculateNode(this.node, char);
-	}
+	macroEval.expr = expr;
 
-	constructor(public expr: string) {}
+	return tag(MACRO_SYMBOL, macroEval);
+}
+
+export function isMacro(instance: unknown): instance is Macro {
+	return isTagged(instance, MACRO_SYMBOL);
 }

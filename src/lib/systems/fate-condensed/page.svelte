@@ -7,6 +7,7 @@
 	import TextInput from '$lib/atoms/text-input.svelte';
 	import { dialogContext } from '$lib/components/dialog-provider.svelte';
 	import { t } from '$lib/i18n';
+	import type { Proxied } from '$lib/systems';
 	import { withSign } from '$lib/utils';
 
 	import { type FateCondensedCharacter } from './character';
@@ -18,7 +19,7 @@
 
 	const { openDialog } = dialogContext();
 
-	export let c: Writable<FateCondensedCharacter>;
+	export let c: Writable<Proxied<FateCondensedCharacter>>;
 
 	$: invalid_vitals =
 		($c.physical_stress_skill && !$c.skills.find((s) => s.name === $c.physical_stress_skill)) ||

@@ -3,10 +3,11 @@
 
 	import DialogBase from '$lib/components/dialog-base.svelte';
 	import { t } from '$lib/i18n';
+	import type { Proxied } from '$lib/systems';
 
 	import type { FateCondensedCharacter } from '../character';
 
-	export let c: Writable<FateCondensedCharacter>;
+	export let c: Writable<Proxied<FateCondensedCharacter>>;
 </script>
 
 <DialogBase title={$t('general.character.name')}>

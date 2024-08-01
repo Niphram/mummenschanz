@@ -1,7 +1,7 @@
 import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize';
 import { nanoid } from 'nanoid';
 
-import { VersionedCharacter, type CharacterMigrationFn } from '$lib/systems/versioned-character';
+import { VersionedCharacter, type CharacterMigrationFn } from '$lib/systems';
 
 export const FATE_CONDENSED_CHAR_MIGRATIONS: CharacterMigrationFn[] = [];
 

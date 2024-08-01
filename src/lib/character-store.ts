@@ -1,11 +1,17 @@
 import { browser } from '$app/environment';
 import { GenericDeserializeInto, Serialize } from 'cerialize';
+import type { ComponentType, SvelteComponent } from 'svelte';
 import { writable, type Writable } from 'svelte/store';
 
 import { initDB } from '$lib/idb-store';
-import { type CharacterMigrationFn, VersionedCharacter } from '$lib/systems/versioned-character';
+import {
+	characterProxy,
+	SYSTEM_MAP,
+	type CharacterMigrationFn,
+	type Proxied,
+	type VersionedCharacter,
+} from '$lib/systems';
 import { debounce, lazy } from '$lib/utils';
-import { SYSTEM_MAP } from './systems';
 
 function migrateCharacter(data: VersionedCharacter, migrations: CharacterMigrationFn[]) {
 	return migrations
@@ -71,35 +77,29 @@ export async function loadCharacter(id: string) {
 
 	if (char.version > system.migrations.length) throw new Error('Unknown Version'); // TODO: Error Page?
 
-	const w = writable(
-		GenericDeserializeInto(
-			migrateCharacter(char, system.migrations),
-			system.character,
-			new system.character(),
-		),
+	const deserializedChar = GenericDeserializeInto(
+		migrateCharacter(char, system.migrations),
+		system.character,
+		new system.character(),
 	);
 
 	const debouncedSave = debounce(async (v: VersionedCharacter) => {
-		console.log('SAVE!!!');
 		await db.put('characters', Serialize(v));
 	}, 1000);
 
-	w.subscribe(debouncedSave);
+	const proxy = characterProxy(deserializedChar, debouncedSave);
 
-	// TODO: Fix this mess
-	type SYSTEMS = typeof SYSTEM_MAP;
-	type SYSTEM<P extends keyof SYSTEMS> = Awaited<ReturnType<SYSTEMS[P]>>['default'];
-	type RETURN = {
-		[Property in keyof SYSTEMS]: {
-			character: Writable<SYSTEM<Property>['character']['prototype']>;
-			Character: SYSTEM<Property>['character']['prototype'];
-			SheetComponent: SYSTEM<Property>['page']['prototype'];
-		};
-	}[keyof SYSTEMS];
+	const w = writable(proxy);
+
+	type LoadedCharacter = {
+		character: Writable<Proxied<VersionedCharacter>>;
+		Character: new () => VersionedCharacter;
+		SheetComponent: ComponentType<SvelteComponent<{ c: Writable<Proxied<VersionedCharacter>> }>>;
+	};
 
 	return {
 		character: w,
 		Character: system.character,
 		SheetComponent: system.page,
-	} as unknown as RETURN;
+	} as unknown as LoadedCharacter;
 }

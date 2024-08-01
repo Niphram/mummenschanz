@@ -1,16 +1,16 @@
 import { autoserialize } from 'cerialize';
 
-import { Derive } from '$lib/macro/derive';
-import { Macro, serializeMacro } from '$lib/macro/macro';
+import { derive } from '$lib/macro/derive';
+import { macro, serializeMacro } from '$lib/macro/macro';
 
 import type { PathfinderCharacter } from './character';
 
 export class Initiative {
 	@serializeMacro
-	misc = new Macro('0');
+	misc = macro('0');
 
 	@autoserialize
 	notes = '';
 
-	readonly mod = new Derive((c: PathfinderCharacter) => c.dex.mod.eval(c) + c.init.misc.eval(c));
+	readonly mod = derive((c: PathfinderCharacter) => c.dex.mod(c) + c.init.misc(c));
 }

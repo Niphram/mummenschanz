@@ -1,6 +1,6 @@
 import { autoserialize } from 'cerialize';
 
-import { Derive } from '$lib/macro/derive';
+import { derive } from '$lib/macro/derive';
 
 import type { AbilityKey } from './ability';
 import type { PathfinderCharacter } from './character';
@@ -12,19 +12,18 @@ export class ArmorClass {
 	@autoserialize
 	secondaryAbility?: AbilityKey;
 
-	readonly abilityMod = new Derive(
+	readonly abilityMod = derive(
 		(c: PathfinderCharacter) =>
-			c[this.primaryAbility].mod.eval(c) +
-			(this.secondaryAbility ? c[this.secondaryAbility].mod.eval(c) : 0),
+			c[this.primaryAbility].mod(c) + (this.secondaryAbility ? c[this.secondaryAbility].mod(c) : 0),
 	);
 
-	readonly total = new Derive(
-		(c: PathfinderCharacter) => 10 + c.ac.abilityMod.eval(c) + c.equipment.acBonus,
+	readonly total = derive(
+		(c: PathfinderCharacter) => 10 + c.ac.abilityMod(c) + c.equipment.acBonus,
 	);
 
-	readonly touch = new Derive((c: PathfinderCharacter) => 10 + c.ac.abilityMod.eval(c));
+	readonly touch = derive((c: PathfinderCharacter) => 10 + c.ac.abilityMod(c));
 
-	readonly flatFooted = new Derive(
-		(c: PathfinderCharacter) => 10 + c.equipment.acBonus + Math.min(c.ac.abilityMod.eval(c), 0),
+	readonly flatFooted = derive(
+		(c: PathfinderCharacter) => 10 + c.equipment.acBonus + Math.min(c.ac.abilityMod(c), 0),
 	);
 }

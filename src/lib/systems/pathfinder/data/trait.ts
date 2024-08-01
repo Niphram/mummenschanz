@@ -1,7 +1,7 @@
 import { autoserialize } from 'cerialize';
 import { nanoid } from 'nanoid';
 
-import { Macro, serializeMacro } from '$lib/macro/macro';
+import { macro, serializeMacro } from '$lib/macro/macro';
 
 import type { PathfinderCharacter } from './character';
 
@@ -13,7 +13,7 @@ export class Trait {
 	name = '';
 
 	@serializeMacro
-	perDay = new Macro('');
+	perDay = macro('');
 
 	@autoserialize
 	remaining = 0;
@@ -23,7 +23,7 @@ export class Trait {
 
 	recharge(c: PathfinderCharacter) {
 		if (this.perDay.expr) {
-			this.remaining = this.perDay.eval(c);
+			this.remaining = this.perDay(c);
 		}
 	}
 }

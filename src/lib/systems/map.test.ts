@@ -1,7 +1,7 @@
 import { Serialize } from 'cerialize';
 import { describe, expect, it } from 'vitest';
 
-import { SYSTEM_MAP } from '.';
+import { SYSTEM_MAP } from './map';
 import { VersionedCharacter } from './versioned-character';
 
 describe('Systems', () => {

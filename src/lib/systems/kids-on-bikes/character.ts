@@ -1,6 +1,6 @@
 import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize';
 
-import { VersionedCharacter } from '$lib/systems/versioned-character';
+import { VersionedCharacter } from '$lib/systems';
 
 import { MIGRATION } from './migration';
 
