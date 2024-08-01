@@ -16,7 +16,9 @@ export function characterProxy<O extends object>(obj: O, onUpdate: (obj: O) => v
 		get(target, p, receiver) {
 			const value = Reflect.get(target, p, receiver);
 
-			if ((typeof value === 'object' || typeof value === 'function') && value !== null) {
+			if (isDerive(value) || isMacro(value)) {
+				return this.nest(value);
+			} else if (typeof value === 'object' && value !== null) {
 				return this.nest(value);
 			} else {
 				return value;
