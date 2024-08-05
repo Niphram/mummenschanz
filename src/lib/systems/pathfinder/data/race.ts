@@ -1,6 +1,6 @@
 import { autoserialize } from 'cerialize';
 
-import { macro, serializeMacro } from '$lib/macro/macro';
+import { macro, autoserializeMacro } from '$lib/macro/macro';
 
 export const SIZE_KEYS = [
 	'fine',
@@ -19,27 +19,27 @@ export class Race {
 	@autoserialize
 	name = 'Unknown Race';
 
-	@serializeMacro
+	@autoserializeMacro
 	speed = macro('30');
 
 	@autoserialize
 	size: SizeKey = 'medium';
 
-	@serializeMacro
+	@autoserializeMacro
 	str = macro('0');
 
-	@serializeMacro
+	@autoserializeMacro
 	dex = macro('0');
 
-	@serializeMacro
+	@autoserializeMacro
 	con = macro('0');
 
-	@serializeMacro
+	@autoserializeMacro
 	int = macro('0');
 
-	@serializeMacro
+	@autoserializeMacro
 	wis = macro('0');
 
-	@serializeMacro
+	@autoserializeMacro
 	cha = macro('0');
 }

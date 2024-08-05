@@ -1,7 +1,7 @@
 import { autoserialize } from 'cerialize';
 
 import { derive } from '$lib/macro/derive';
-import { macro, serializeMacro } from '$lib/macro/macro';
+import { macro, autoserializeMacro } from '$lib/macro/macro';
 
 import type { PathfinderCharacter } from './character';
 
@@ -9,13 +9,13 @@ export const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const;
 export type AbilityKey = (typeof ABILITY_KEYS)[number];
 
 export class Ability {
-	@serializeMacro
+	@autoserializeMacro
 	base = macro('10');
 
-	@serializeMacro
+	@autoserializeMacro
 	bonus = macro('0');
 
-	@serializeMacro
+	@autoserializeMacro
 	temp = macro('0');
 
 	@autoserialize

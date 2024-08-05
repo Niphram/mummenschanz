@@ -1,7 +1,7 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
 
 import { derive } from '$lib/macro/derive';
-import { macro, serializeMacro } from '$lib/macro/macro';
+import { macro, autoserializeMacro } from '$lib/macro/macro';
 import { mapSum } from '$lib/utils';
 
 import type { AbilityKey } from './ability';
@@ -60,10 +60,10 @@ export class Skill {
 	@autoserialize
 	ranks = 0;
 
-	@serializeMacro
+	@autoserializeMacro
 	misc = macro('0');
 
-	@serializeMacro
+	@autoserializeMacro
 	temp = macro('0');
 
 	@autoserialize

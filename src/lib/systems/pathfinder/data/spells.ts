@@ -2,7 +2,7 @@ import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize'
 import { nanoid } from 'nanoid';
 
 import { derive } from '$lib/macro/derive';
-import { macro, serializeMacro } from '$lib/macro/macro';
+import { macro, autoserializeMacro } from '$lib/macro/macro';
 import { mapSum, withSign } from '$lib/utils';
 
 import type { AbilityKey } from './ability';
@@ -261,7 +261,7 @@ export class Spells {
 	@autoserialize
 	dcAbility?: AbilityKey;
 
-	@serializeMacro
+	@autoserializeMacro
 	dcBonus = macro('0');
 
 	@autoserializeAs(SpellLevelList)

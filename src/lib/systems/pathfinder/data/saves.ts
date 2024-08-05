@@ -1,7 +1,7 @@
 import { autoserialize } from 'cerialize';
 
 import { derive } from '$lib/macro/derive';
-import { macro, serializeMacro } from '$lib/macro/macro';
+import { macro, autoserializeMacro } from '$lib/macro/macro';
 
 import type { AbilityKey } from './ability';
 import type { PathfinderCharacter } from './character';
@@ -19,10 +19,10 @@ export class Save {
 	@autoserialize
 	ability: AbilityKey;
 
-	@serializeMacro
+	@autoserializeMacro
 	bonus = macro('0');
 
-	@serializeMacro
+	@autoserializeMacro
 	misc = macro('0');
 
 	@autoserialize

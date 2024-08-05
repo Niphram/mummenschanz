@@ -2,7 +2,7 @@ import { autoserialize, autoserializeAs } from 'cerialize';
 import { nanoid } from 'nanoid';
 
 import { derive } from '$lib/macro/derive';
-import { macro, serializeMacro } from '$lib/macro/macro';
+import { macro, autoserializeMacro } from '$lib/macro/macro';
 
 import type { AbilityKey } from './ability';
 import type { PathfinderCharacter } from './character';
@@ -21,10 +21,10 @@ const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
 };
 
 export class SpellResistance {
-	@serializeMacro
+	@autoserializeMacro
 	base = macro('0');
 
-	@serializeMacro
+	@autoserializeMacro
 	misc = macro('0');
 
 	@autoserialize
@@ -78,7 +78,7 @@ export class AttackRoll {
 	@autoserialize
 	abilityModifier: AbilityKey | 'none' = 'none';
 
-	@serializeMacro
+	@autoserializeMacro
 	bonusModifier = macro('0');
 
 	@autoserialize

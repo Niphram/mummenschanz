@@ -1,12 +1,12 @@
 import { autoserialize } from 'cerialize';
 
 import { derive } from '$lib/macro/derive';
-import { macro, serializeMacro } from '$lib/macro/macro';
+import { macro, autoserializeMacro } from '$lib/macro/macro';
 
 import type { PathfinderCharacter } from './character';
 
 export class Initiative {
-	@serializeMacro
+	@autoserializeMacro
 	misc = macro('0');
 
 	@autoserialize
