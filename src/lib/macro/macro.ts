@@ -15,7 +15,7 @@ export type Macro = Tagged<
 	typeof MACRO_SYMBOL
 >;
 
-export const serializeMacro = autoserializeAs({
+export const autoserializeMacro = autoserializeAs({
 	Serialize(instance: Macro): string {
 		return instance.expr;
 	},

@@ -1,11 +1,11 @@
 import { GenericDeserialize, Serialize } from 'cerialize';
 import { describe, expect, it } from 'vitest';
 
-import { isMacro, macro, serializeMacro } from './macro';
+import { isMacro, macro, autoserializeMacro } from './macro';
 
-describe('serializeMacro', () => {
+describe('autoserializeMacro', () => {
 	class TestClass {
-		@serializeMacro
+		@autoserializeMacro
 		test = macro('10 * 5');
 	}
 
