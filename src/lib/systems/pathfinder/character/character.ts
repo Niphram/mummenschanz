@@ -5,6 +5,7 @@ import { Class, Classes } from './class';
 import { macro } from '$lib/macro/macro';
 import { Skills } from './skills';
 import { autoserializeArrayAs } from '$lib/utils/serialize';
+import type { Size } from './size';
 
 export const MIGRATIONS: CharacterMigrationFn[] = [];
 
@@ -21,7 +22,7 @@ export class PathfinderCharacter extends VersionedCharacter {
 
 	deity = '';
 
-	size = 'medium';
+	size: Size = 'medium';
 
 	age_category = '';
 	age = 25;
