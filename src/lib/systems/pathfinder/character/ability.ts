@@ -1,6 +1,8 @@
+import { autoserialize } from 'cerialize';
+
 import { derive } from '$lib/macro/derive';
 import { macro, autoserializeMacro } from '$lib/macro/macro';
-import { autoserialize } from 'cerialize';
+
 import type { PathfinderCharacter } from './character';
 
 export const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const;
@@ -32,7 +34,7 @@ export class Ability {
 		Math.max(-5, Math.floor(this.total(c) / 2) - 5),
 	);
 
-	constructor(key: AbilityKey) {
+	constructor(_key: AbilityKey) {
 		this.total = derive((c: PathfinderCharacter) => this.base(c) + this.enhance(c));
 	}
 }
