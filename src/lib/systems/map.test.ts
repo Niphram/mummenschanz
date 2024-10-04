@@ -7,33 +7,31 @@ import { VersionedCharacter } from './versioned-character';
 describe('Systems', () => {
 	const systems = Object.entries(SYSTEM_MAP);
 
-	for (const [system, systemImport] of systems) {
-		describe(system, async () => {
-			const { character, migrations } = (await systemImport()).default;
+	describe.each(systems)('%s', async (system, systemImport) => {
+		const { character, migrations } = (await systemImport()).default;
 
-			describe('Character', () => {
-				it('should extend VersionedCharacter', () => {
-					expect(new character()).toBeInstanceOf(VersionedCharacter);
-				});
+		describe('Character', () => {
+			it('should extend VersionedCharacter', () => {
+				expect(new character()).toBeInstanceOf(VersionedCharacter);
+			});
 
-				it('should have correct system', () => {
-					expect(new character().system).toBe(system);
-				});
+			it('should have correct system', () => {
+				expect(new character().system).toBe(system);
+			});
 
-				it('version should match migrations', () => {
-					expect(new character().version).toBe(migrations.length);
-				});
+			it('version should match migrations', () => {
+				expect(new character().version).toBe(migrations.length);
+			});
 
-				it('should inherit serialization from VersionedCharacter', () => {
-					const serialized: VersionedCharacter = Serialize(new character());
+			it('should inherit serialization from VersionedCharacter', () => {
+				const serialized: VersionedCharacter = Serialize(new character());
 
-					expect(serialized.id).toBeDefined();
-					expect(serialized.system).toBe(system);
-					expect(serialized.version).toBe(migrations.length);
-					expect(serialized.updated).toBeDefined();
-					expect(serialized.name).toBe('Unnamed Character');
-				});
+				expect(serialized.id).toBeDefined();
+				expect(serialized.system).toBe(system);
+				expect(serialized.version).toBe(migrations.length);
+				expect(serialized.updated).toBeDefined();
+				expect(serialized.name).toBe('Unnamed Character');
 			});
 		});
-	}
+	});
 });
