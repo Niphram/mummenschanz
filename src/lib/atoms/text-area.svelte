@@ -12,14 +12,14 @@
 
 <div class="form-control w-full">
 	{#if label}
-		<label for={name} class="label pb-0">
+		<label for={name} class="label py-0">
 			<span class="label-text">{label}</span>
 		</label>
 	{/if}
 	<textarea
 		{name}
 		{placeholder}
-		class="textarea textarea-bordered w-full bg-base-200"
+		class="textarea textarea-bordered w-full"
 		style:resize
 		{rows}
 		bind:value

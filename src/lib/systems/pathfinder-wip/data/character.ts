@@ -9,6 +9,7 @@ import { autoserializeArrayAs } from '$lib/utils/serialize';
 import { Class, Classes } from './class';
 import { HitPoints } from './hp';
 import { Skills } from './skill';
+import { Money } from './money';
 
 @inheritSerialization(VersionedCharacter)
 export class PathfinderCharacter extends VersionedCharacter {
@@ -37,6 +38,9 @@ export class PathfinderCharacter extends VersionedCharacter {
 
 	@autoserializeAs(Skills)
 	skills = new Skills();
+
+	@autoserializeAs(Money)
+	money = new Money();
 
 	@autoserializeAs(Config)
 	config = new Config();

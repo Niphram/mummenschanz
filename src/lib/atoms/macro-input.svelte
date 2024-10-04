@@ -28,14 +28,14 @@
 </script>
 
 <div class="form-control w-full">
-	<label for={name} class="label pb-0">
+	<label for={name} class="label py-0">
 		<span class="label-text">{label ?? ''}</span>
 		<span class="label-text-alt text-opacity-50">(Macro)</span>
 	</label>
 	<input
 		{name}
 		{placeholder}
-		class="input input-bordered w-full bg-base-200"
+		class="input input-bordered w-full"
 		class:input-sm={small}
 		class:input-error={!valid}
 		bind:value={current}

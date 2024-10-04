@@ -9,6 +9,7 @@
 	import ConfirmDialog from '$lib/dialogs/confirm-dialog.svelte';
 	import CreateCharacterDialog from '$lib/dialogs/create-character-dialog.svelte';
 	import { t } from '$lib/i18n';
+	import { bytes, storage } from '$lib/utils/storage';
 	import { fade } from 'svelte/transition';
 
 	const { openDialog } = dialogContext();
@@ -55,7 +56,7 @@
 		<Loader />
 	</div>
 {:then characters}
-	<div in:fade class="flex max-w-full flex-col">
+	<div in:fade class="flex max-w-full grow flex-col gap-4">
 		<button class="btn btn-primary" on:click={() => openDialog(CreateCharacterDialog, {})}>
 			<Icon type="Add" class="size-6" />
 			Create new Character
@@ -63,7 +64,7 @@
 
 		<Divider>Saved Characters</Divider>
 
-		<div class="flex w-full max-w-2xl grow flex-col gap-4">
+		<div class="flex w-full max-w-2xl flex-col justify-start gap-4">
 			{#each characters as char}
 				<div class="flex grow flex-row gap-2">
 					<a
@@ -89,4 +90,11 @@
 			{/each}
 		</div>
 	</div>
+
+	{#if !$storage.loading && !$storage.error}
+		<div class="flex w-full flex-col items-stretch gap-2">
+			<div class="text-center">Used Storage: {bytes($storage.usage)} / {bytes($storage.quota)}</div>
+			<progress class="progress" value={$storage.usage} max={$storage.quota}></progress>
+		</div>
+	{/if}
 {/await}

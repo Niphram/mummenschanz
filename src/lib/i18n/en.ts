@@ -1,3 +1,5 @@
+import { pathfinder_wip } from './pathfinder_wip/en';
+
 export default {
 	general: {
 		character: {
@@ -30,9 +32,7 @@ export default {
 	pathfinder: {
 		system_name: 'Pathfinder',
 	},
-	pathfinder_wip: {
-		system_name: 'Pathfinder (Rewrite. Again.)',
-	},
+	pathfinder_wip,
 	kids_on_bikes: {
 		system_name: 'Kids on Bikes',
 	},

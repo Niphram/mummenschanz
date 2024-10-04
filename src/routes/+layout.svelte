@@ -1,10 +1,10 @@
 <script lang="ts">
 	import '../app.css';
 
+	import { onNavigate } from '$app/navigation';
+
 	import DialogProvider from '$lib/components/dialog-provider.svelte';
 	import ThemeChanger from '$lib/components/theme-changer.svelte';
-
-	import { onNavigate } from '$app/navigation';
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
