@@ -21,15 +21,13 @@ describe('Macro', () => {
 			['.', TokenKind.Period],
 		];
 
-		for (const [input, kind] of TESTS) {
-			it(`Tokenize "${input}"`, () => {
-				const token = tokenize(input);
+		it.each(TESTS)('Tokenize "%s"', (input, kind) => {
+			const token = tokenize(input);
 
-				expect(token?.kind).toBe(kind);
-				expect(token?.next).toBeUndefined();
-				expect(token?.text).toBe(input);
-			});
-		}
+			expect(token?.kind).toBe(kind);
+			expect(token?.next).toBeUndefined();
+			expect(token?.text).toBe(input);
+		});
 
 		it('Should ignore spaces', () => {
 			expect(tokenize('     ')).toBeUndefined();

@@ -24,13 +24,11 @@ describe('Macro', () => {
 			['(1234)', NodeType.Func],
 		];
 
-		for (const [input, output] of TESTS) {
-			it(`parse "${input}"`, () => {
-				const parsed = parse(input);
+		it.each(TESTS)('parse "%s"', (input, output) => {
+			const parsed = parse(input);
 
-				expect(parsed.type).toEqual(output);
-			});
-		}
+			expect(parsed.type).toEqual(output);
+		});
 
 		const NEGATIVE_TESTS: string[] = [
 			'',
@@ -51,12 +49,10 @@ describe('Macro', () => {
 			'fake(1)',
 		];
 
-		for (const input of NEGATIVE_TESTS) {
-			it(`fail "${input}"`, () => {
-				const parsed = parse(input);
+		it.each(NEGATIVE_TESTS)('fail "%s"', (input) => {
+			const parsed = parse(input);
 
-				expect(parsed.type).toBe(NodeType.Error);
-			});
-		}
+			expect(parsed.type).toBe(NodeType.Error);
+		});
 	});
 });
