@@ -2,7 +2,7 @@
 	import { base } from '$app/paths';
 	import type { Writable } from 'svelte/store';
 
-	import DialogBase from '$lib/components/dialog-base.svelte';
+	import DialogBase from '$lib/components/responsive-dialog-base.svelte';
 	import { dialogContext } from '$lib/components/dialog-provider.svelte';
 	import type { Proxied } from '$lib/systems';
 

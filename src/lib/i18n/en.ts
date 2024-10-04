@@ -7,6 +7,9 @@ export default {
 		},
 
 		ui: {
+			confirm: 'Confirm',
+			cancel: 'Cancel',
+
 			delete: 'Delete',
 			add: 'Add',
 			config: 'Config',
@@ -16,9 +19,19 @@ export default {
 			always: 'Always',
 			auto: 'Auto',
 		},
+
+		dialogs: {
+			character_create: {
+				title: 'New character',
+				message: 'Select a system',
+			},
+		},
 	},
 	pathfinder: {
 		system_name: 'Pathfinder',
+	},
+	pathfinder_wip: {
+		system_name: 'Pathfinder (Rewrite. Again.)',
 	},
 	kids_on_bikes: {
 		system_name: 'Kids on Bikes',

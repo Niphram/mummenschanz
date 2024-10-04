@@ -4,7 +4,7 @@
 	import Divider from '$lib/atoms/divider.svelte';
 	import Icon from '$lib/atoms/icon.svelte';
 	import IntegerInput from '$lib/atoms/integer-input.svelte';
-	import DialogBase from '$lib/components/dialog-base.svelte';
+	import ResponsiveDialogBase from '$lib/components/responsive-dialog-base.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import { t } from '$lib/i18n';
 	import type { Proxied } from '$lib/systems';
@@ -24,7 +24,7 @@
 	}
 </script>
 
-<DialogBase title={$t('fate_condensed.skills_config')}>
+<ResponsiveDialogBase title={$t('fate_condensed.skills_config')}>
 	<SortableList
 		class="mb-8 flex flex-col items-center gap-2"
 		options={{
@@ -71,4 +71,4 @@
 			<Icon type="Add" class="size-6" />
 		</button>
 	</Divider>
-</DialogBase>
+</ResponsiveDialogBase>

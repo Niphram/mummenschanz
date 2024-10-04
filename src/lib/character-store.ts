@@ -69,13 +69,13 @@ export async function loadCharacter(id: string) {
 	const db = await dbInstance();
 
 	const char = await db.getFromIndex('characters', 'id_idx', id);
-	if (!char) throw new Error('Not Found'); // TODO: Error Page?
+	if (!char) throw new Error(`Not Found: ${id}`); // TODO: Error Page?
 
-	if (!(char.system in SYSTEM_MAP)) throw new Error('Unknown System'); // TODO: Error Page?
+	if (!(char.system in SYSTEM_MAP)) throw new Error(`Unknown System: ${char.system}`); // TODO: Error Page?
 
 	const system = (await SYSTEM_MAP[char.system]()).default;
 
-	if (char.version > system.migrations.length) throw new Error('Unknown Version'); // TODO: Error Page?
+	if (char.version > system.migrations.length) throw new Error(`Unknown Version: ${char.version}`); // TODO: Error Page?
 
 	const deserializedChar = GenericDeserializeInto(
 		migrateCharacter(char, system.migrations),
