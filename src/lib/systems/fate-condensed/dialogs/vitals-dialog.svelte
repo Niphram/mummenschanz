@@ -4,7 +4,7 @@
 	import Divider from '$lib/atoms/divider.svelte';
 	import IntegerInput from '$lib/atoms/integer-input.svelte';
 	import Select from '$lib/atoms/select.svelte';
-	import DialogBase from '$lib/components/dialog-base.svelte';
+	import ResponsiveDialogBase from '$lib/components/responsive-dialog-base.svelte';
 	import { t } from '$lib/i18n';
 	import type { Proxied } from '$lib/systems';
 
@@ -21,7 +21,7 @@
 		!!$c.mental_stress_skill && !$c.skills.find((s) => s.name === $c.mental_stress_skill);
 </script>
 
-<DialogBase title={$t('fate_condensed.vitals')}>
+<ResponsiveDialogBase title={$t('fate_condensed.vitals')}>
 	<div class="flex flex-col gap-4">
 		<div class="flex flex-col">
 			<Divider>{$t('fate_condensed.physical_stress')}</Divider>
@@ -94,4 +94,4 @@
 			</Select>
 		</div>
 	</div>
-</DialogBase>
+</ResponsiveDialogBase>
