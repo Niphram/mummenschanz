@@ -11,5 +11,5 @@ export function tag<I, D>(discriminator: D, instance: I) {
 }
 
 export function isTagged<I, D>(instance: I, discriminator: D): instance is Tagged<I, D> {
-	return (instance as Tagged<I, D>)[TAG_SYMBOL] === discriminator;
+	return instance && (instance as Tagged<I, D>)[TAG_SYMBOL] === discriminator;
 }

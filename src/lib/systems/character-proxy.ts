@@ -3,11 +3,17 @@ import DeepProxy from 'proxy-deep';
 import { isDerive, type Derive } from '$lib/macro/derive';
 import { isMacro, type Macro } from '$lib/macro/macro';
 
+const IDENTITY_TRAP_SYMBOL = Symbol('PROXY_IDENTITY');
+
+export function unproxy(instance: unknown): unknown {
+	return (instance as { [IDENTITY_TRAP_SYMBOL]: unknown })[IDENTITY_TRAP_SYMBOL];
+}
+
 export type Proxied<C> = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[P in keyof C]: C[P] extends Derive<any> ? { (): number }
 	: C[P] extends Macro ? { expr: string; (): number }
-	: C[P] extends Array<infer S> ? Proxied<C[P]> & Proxied<S>[]
+	: C[P] extends Array<infer S> ? Proxied<S>[] & Proxied<C[P]>
 	: C[P] extends object ? Proxied<C[P]>
 	: C[P];
 };
@@ -17,7 +23,9 @@ export function characterProxy<O extends object>(obj: O, onUpdate: (obj: O) => v
 		get(target, p, receiver) {
 			const value = Reflect.get(target, p, receiver);
 
-			if (isDerive(value) || isMacro(value)) {
+			if (p === IDENTITY_TRAP_SYMBOL) {
+				return value;
+			} else if (isDerive(value) || isMacro(value)) {
 				return this.nest(value);
 			} else if (typeof value === 'object' && value !== null) {
 				return this.nest(value);

@@ -4,6 +4,7 @@
 	import NameButton from '../components/name-button.svelte';
 
 	import { char } from '../context';
+	import Inventory from '../sections/inventory.svelte';
 	import Skills from '../sections/skills.svelte';
 	import Valuables from '../sections/valuables.svelte';
 	import SkillsPage from './small-pages/skills-page.svelte';
@@ -40,6 +41,9 @@
 		>
 			<Divider>Valuables</Divider>
 			<Valuables />
+
+			<Divider>Inventory</Divider>
+			<Inventory />
 		</div>
 	</div>
 </div>
