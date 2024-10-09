@@ -12,6 +12,12 @@
 
 	let current = value;
 
+	// Make sure to update the displayed value if the bound value changes
+	$: updateCurrent(value);
+	function updateCurrent(v: number) {
+		current = v;
+	}
+
 	$: valid = Number.isInteger(current) && current >= min && current <= max;
 
 	$: if (valid) {

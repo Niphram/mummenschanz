@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Divider from '$lib/atoms/divider.svelte';
-	import Header from '$lib/atoms/header.svelte';
 	import NameButton from '../components/name-button.svelte';
 
 	import { char } from '../context';
+	import { Item } from '../data/item';
+	import Hp from '../sections/hp.svelte';
 	import Inventory from '../sections/inventory.svelte';
 	import Skills from '../sections/skills.svelte';
 	import Valuables from '../sections/valuables.svelte';
@@ -18,7 +19,7 @@
 	<div class="sticky top-0 z-40 w-full bg-base-200 drop-shadow-xl">
 		<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
 			<NameButton />
-			<button class="btn"> HP </button>
+			<Hp />
 		</div>
 	</div>
 
@@ -42,7 +43,10 @@
 			<Divider>Valuables</Divider>
 			<Valuables />
 
-			<Divider>Inventory</Divider>
+			<Divider>
+				Inventory
+				<button on:click={() => ($c.items.push(new Item()), ($c = $c))}>ADD</button>
+			</Divider>
 			<Inventory />
 		</div>
 	</div>

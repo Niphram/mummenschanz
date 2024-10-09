@@ -10,6 +10,8 @@
 	import { dialogContext } from '$lib/components/dialog-provider.svelte';
 	import { char } from '../context';
 	import Skills from '../sections/skills.svelte';
+	import HP from '../sections/hp.svelte';
+	import HpDialog from '../dialogs/hp-dialog.svelte';
 
 	const { openDialog } = dialogContext();
 
@@ -28,7 +30,7 @@
 			<div class="flex flex-1 grow flex-row justify-stretch gap-2">
 				<AbilityButtons />
 
-				<div>HP {$c.hp.max()}</div>
+				<HP on:click={() => openDialog(HpDialog, { c })} />
 
 				<div>Conditions?</div>
 			</div>

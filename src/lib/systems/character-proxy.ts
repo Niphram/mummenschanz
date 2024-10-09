@@ -13,6 +13,7 @@ export type Proxied<C> = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[P in keyof C]: C[P] extends Derive<any> ? { (): number }
 	: C[P] extends Macro ? { expr: string; (): number }
+	: C[P] extends (...args: infer Args) => infer R ? (...args: Args) => R
 	: C[P] extends Array<infer S> ? Proxied<S>[] & Proxied<C[P]>
 	: C[P] extends object ? Proxied<C[P]>
 	: C[P];
