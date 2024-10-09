@@ -8,11 +8,8 @@
 	import Inventory from '../sections/inventory.svelte';
 	import Skills from '../sections/skills.svelte';
 	import Valuables from '../sections/valuables.svelte';
-	import SkillsPage from './small-pages/skills-page.svelte';
 
 	const c = char();
-
-	const PAGES = [{ page: SkillsPage }] as const;
 </script>
 
 <div class="flex h-screen flex-col">
