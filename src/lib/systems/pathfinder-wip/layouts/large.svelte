@@ -12,6 +12,7 @@
 	import Skills from '../sections/skills.svelte';
 	import HP from '../sections/hp.svelte';
 	import HpDialog from '../dialogs/hp-dialog.svelte';
+	import Persona from '../sections/persona.svelte';
 
 	const { openDialog } = dialogContext();
 
@@ -24,9 +25,9 @@
 	</Header>
 </div>
 
-<div class="flex flex-row justify-center">
-	<div class="flex w-full max-w-4xl flex-col">
-		<div class="w-full max-w-4xl">
+<div class="flex w-screen flex-row justify-center p-4">
+	<div class="flex w-full max-w-6xl flex-col">
+		<div class="w-full">
 			<div class="flex flex-1 grow flex-row justify-stretch gap-2">
 				<AbilityButtons />
 
@@ -36,19 +37,36 @@
 			</div>
 		</div>
 
-		<div class="flex flex-row">
-			<div>
+		<div class="flex flex-row justify-stretch gap-4">
+			<div class="relative grow overflow-y-auto">
+				<div class="flex h-0 min-h-full flex-col gap-1">
+					<p>Some</p>
+					<p>Other</p>
+					<p>Stuff</p>
+					<p>Some</p>
+					<p>Other</p>
+					<p>Stuff</p>
+					<p>Some</p>
+					<p>Other</p>
+					<p>Stuff</p>
+				</div>
+			</div>
+
+			<div class="flex grow flex-col gap-1">
 				<Skills />
 			</div>
 
-			<div class="grow">
-				<TabContainer
-					tabs={[
-						{ label: 'Combat', component: Combat },
-						{ label: 'Spells', component: Spells },
-						{ label: 'Inventory', component: Inventory },
-					]}
-				/>
+			<div class="relative overflow-y-auto rounded-box border border-solid border-base-content p-4">
+				<div class="flex h-0 min-h-full flex-col gap-1">
+					<TabContainer
+						tabs={[
+							{ label: 'Combat', component: Combat },
+							{ label: 'Spells', component: Spells },
+							{ label: 'Inventory', component: Inventory },
+							$c.persona.enabled && { label: 'Persona', component: Persona },
+						].filter((tab) => !!tab)}
+					/>
+				</div>
 			</div>
 		</div>
 	</div>

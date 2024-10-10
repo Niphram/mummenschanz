@@ -8,11 +8,13 @@
 	const { openDialog } = dialogContext();
 
 	const c = char();
+
+	export let buttonClass = '';
 </script>
 
 {#each ABILITY_KEYS as key (key)}
 	<button
-		class="btn h-min min-w-16 grow p-0"
+		class="btn h-min min-w-16 grow p-0 {buttonClass}"
 		on:contextmenu|preventDefault={() => openDialog(AbilityDialog, { c, ability: key })}
 	>
 		<div class="flex w-full flex-col divide-y-2 divide-base-100 text-center">

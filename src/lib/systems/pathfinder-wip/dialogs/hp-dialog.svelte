@@ -18,46 +18,63 @@
 	<div class="flex h-full flex-col gap-4">
 		<div class="flex grow flex-col gap-4">
 			<div
-				class="grid grid-flow-col grid-cols-3 grid-rows-2 place-items-center content-center items-center"
+				class="grid grid-flow-row grid-cols-2 place-items-center content-center items-center gap-2"
 			>
-				<span class="uppercase">Current HP</span>
-				<input
-					type="number"
-					class="input input-bordered w-full text-center text-2xl"
-					value={$c.hp.current()}
-					on:input={(e) => ($c.hp.damage_taken = $c.hp.max() - +e.currentTarget.value)}
-				/>
-				<span class="uppercase">Max HP</span>
-				<span class="text-4xl font-extrabold">{$c.hp.max()}</span>
-				<span class="uppercase">Temp HP</span>
-				<input
-					type="number"
-					class="input input-bordered w-full text-center text-2xl"
-					bind:value={$c.hp.temp}
-				/>
+				<div class="flex flex-col items-center">
+					<span class="uppercase">Current HP</span>
+					<input
+						type="number"
+						class="input input-bordered w-full text-center text-2xl"
+						value={$c.hp.current()}
+						on:input={(e) => ($c.hp.damage_taken = $c.hp.max() - +e.currentTarget.value)}
+					/>
+				</div>
+
+				<div class="flex flex-col items-center">
+					<span class="uppercase">Max HP</span>
+					<span class="text-4xl font-extrabold">{$c.hp.max()}</span>
+				</div>
+				<div class="flex flex-col items-center">
+					<span class="uppercase">Temp HP</span>
+					<input
+						type="number"
+						class="input input-bordered w-full text-center text-2xl"
+						bind:value={$c.hp.temp}
+					/>
+				</div>
+				<div class="flex flex-col items-center">
+					<span class="uppercase">Non Lethal</span>
+					<input
+						type="number"
+						class="input input-bordered w-full text-center text-2xl"
+						bind:value={$c.hp.non_lethal}
+					/>
+				</div>
 			</div>
 
 			<Divider>Modify</Divider>
 
 			<div class="flex h-min flex-row items-stretch gap-4">
-				<button
-					on:click|preventDefault={() => ($c.hp.heal(modifyAmount), ($c = $c))}
-					class="btn h-auto flex-1 bg-green-500 px-0 text-xl">Heal</button
-				>
+				<div class="flex flex-1 basis-0 flex-col">
+					<button
+						on:click|preventDefault={() => ($c.hp.heal(modifyAmount), ($c = $c))}
+						class="btn grow bg-green-500 px-2 text-lg lg:text-xl">Heal</button
+					>
+				</div>
 				<input
 					type="number"
-					class="input input-bordered h-auto w-24 text-center text-xl"
+					class="input input-bordered h-auto w-24 text-center text-6xl"
 					min="0"
 					bind:value={modifyAmount}
 				/>
-				<div class="flex flex-1 flex-col">
+				<div class="flex flex-1 basis-0 flex-col gap-2">
 					<button
 						on:click|preventDefault={() => ($c.hp.dealLethal(modifyAmount), ($c = $c))}
-						class="btn grow bg-red-500 text-xl">Lethal</button
+						class="btn grow bg-red-500 px-2 text-lg lg:text-xl">Lethal</button
 					>
 					<button
 						on:click|preventDefault={() => ($c.hp.dealNonLethal(modifyAmount), ($c = $c))}
-						class="btn grow bg-orange-500 text-xl">Non-Lethal</button
+						class="btn grow bg-orange-500 px-2 text-lg lg:text-xl">Non-Lethal</button
 					>
 				</div>
 			</div>

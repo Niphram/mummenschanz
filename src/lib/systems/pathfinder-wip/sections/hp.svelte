@@ -13,15 +13,17 @@
 </script>
 
 <button
-	class="btn h-auto max-h-none w-40 p-0"
+	class="btn h-auto max-h-none px-2 py-0 md:w-40"
 	class:bg-orange-500={staggered}
 	class:bg-red-500={unconscious}
 	on:click={() => openDialog(HpDialog, { c })}
 >
-	<div class="flex w-full flex-col divide-y-2 divide-base-100 text-center">
-		<div class="contents">
-			<span>Hit Points</span>
-			<div class="flex flex-row justify-center py-1 text-3xl">
+	<div
+		class="flex w-full flex-row divide-x-2 divide-base-100 text-center md:flex-col md:divide-x-0 md:divide-y-2"
+	>
+		<div class="flex flex-col justify-center pr-2 md:pb-2 md:pr-0">
+			<span class="md:text-md text-xs">Hit Points</span>
+			<div class="text-md flex flex-row justify-center md:text-3xl">
 				<span>{$c.hp.current()}</span>
 				{#if $c.hp.temp !== 0}
 					<span class="text-blue-500">({withSign($c.hp.temp)})</span>
@@ -32,8 +34,9 @@
 		</div>
 
 		{#if $c.hp.non_lethal !== 0}
-			<div class="py-1">
-				<span>Non Lethal: {$c.hp.non_lethal}</span>
+			<div class="flex flex-col py-1 pl-2 md:flex-row md:pl-0">
+				<span class="text-xs">Non Lethal:</span>
+				<span class="text-md">{$c.hp.non_lethal}</span>
 			</div>
 		{/if}
 	</div>

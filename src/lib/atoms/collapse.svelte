@@ -41,7 +41,7 @@
 	tabindex="0"
 >
 	{#if $$slots.title}
-		<div class="collapse-title h-min min-h-0 py-2 md:py-4" class:pe-4={!icon}>
+		<div class="collapse-title h-min min-h-0 py-2" class:pe-4={!icon}>
 			<slot name="title" />
 		</div>
 	{/if}

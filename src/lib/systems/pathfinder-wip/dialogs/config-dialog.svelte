@@ -15,4 +15,11 @@
 			<input type="checkbox" class="toggle" bind:checked={$c.config.use_average_hp} />
 		</label>
 	</div>
+
+	<div class="form-control">
+		<label class="label cursor-pointer">
+			<span class="label-text">Enable persona system</span>
+			<input type="checkbox" class="toggle" bind:checked={$c.persona.enabled} />
+		</label>
+	</div>
 </div>

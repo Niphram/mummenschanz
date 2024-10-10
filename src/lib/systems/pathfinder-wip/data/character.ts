@@ -11,6 +11,7 @@ import { HitPoints } from './hp';
 import { Item, Items } from './item';
 import { Money } from './money';
 import { Skills } from './skill';
+import { Persona } from './persona';
 
 @inheritSerialization(VersionedCharacter)
 export class PathfinderCharacter extends VersionedCharacter {
@@ -45,6 +46,9 @@ export class PathfinderCharacter extends VersionedCharacter {
 
 	@autoserializeAs(Money)
 	money = new Money();
+
+	@autoserializeAs(Persona)
+	persona = new Persona();
 
 	@autoserializeAs(Config)
 	config = new Config();

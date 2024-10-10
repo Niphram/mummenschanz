@@ -5,14 +5,14 @@
 
 	import type { PathfinderCharacter } from './data/character';
 	import LargeLayout from './layouts/large.svelte';
-	import MediumLayout from './layouts/medium.svelte';
+	// import MediumLayout from './layouts/medium.svelte';
 	import SmallLayout from './layouts/small.svelte';
 	import { setChar } from './context';
 
 	let windowWidth: number;
 	$: layout =
 		windowWidth >= 1024 ? LargeLayout
-		: windowWidth >= 768 ? MediumLayout
+			//: windowWidth >= 768 ? MediumLayout
 		: SmallLayout;
 
 	export let c: Writable<Proxied<PathfinderCharacter>>;

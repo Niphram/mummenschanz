@@ -38,4 +38,13 @@ export const pathfinder_wip = {
 		swim: 'Swim',
 		useMagicDevice: 'Use Magic Device',
 	},
+
+	persona: {
+		charm: 'Charm',
+		genius: 'Genius',
+		heroism: 'Heroism',
+		sacrifice: 'Sacrifice',
+		sagacity: 'Sagacity',
+		subterfuge: 'Subterfuge',
+	},
 };

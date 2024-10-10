@@ -1,3 +1,4 @@
+import type { Proxied } from '$lib/systems';
 import type { VersionedCharacter } from '$lib/systems/versioned-character';
 
 import { calculateNode } from './evaluate';
@@ -5,7 +6,10 @@ import { parse } from './parser';
 
 const MACRO = /{{(.*?)}}/g;
 
-export function parseTextWithMacros<C extends VersionedCharacter>(input: string, char: C): string {
+export function parseTextWithMacros<C extends VersionedCharacter>(
+	input: string,
+	char: C | Proxied<C>,
+): string {
 	const parsed = input.replaceAll(MACRO, (match) => {
 		const macro = match.substring(2, match.length - 2);
 
