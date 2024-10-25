@@ -38,7 +38,7 @@
 		</div>
 
 		<div class="flex flex-row justify-stretch gap-4">
-			<div class="relative grow overflow-y-auto">
+			<div class="relative w-min grow overflow-y-auto">
 				<div class="flex h-0 min-h-full flex-col gap-1">
 					<p>Some</p>
 					<p>Other</p>
@@ -52,11 +52,13 @@
 				</div>
 			</div>
 
-			<div class="flex grow flex-col gap-1">
+			<div class="flex w-96 shrink-0 flex-col gap-1">
 				<Skills />
 			</div>
 
-			<div class="relative overflow-y-auto rounded-box border border-solid border-base-content p-4">
+			<div
+				class="relative max-w-xl grow overflow-y-auto rounded-box border border-solid border-base-content p-4"
+			>
 				<div class="flex h-0 min-h-full flex-col gap-1">
 					<TabContainer
 						tabs={[

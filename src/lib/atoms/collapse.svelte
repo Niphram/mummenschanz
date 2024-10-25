@@ -6,6 +6,9 @@
 	let className: string = '';
 	export { className as class };
 
+	export let titleClass: string = '';
+	export let contentClass: string = '';
+
 	function toggleOpen() {
 		open = !open;
 	}
@@ -25,6 +28,8 @@
 			toggleOpen();
 		}
 	}
+
+	$: console.log(open);
 </script>
 
 <div
@@ -41,12 +46,12 @@
 	tabindex="0"
 >
 	{#if $$slots.title}
-		<div class="collapse-title h-min min-h-0 py-2" class:pe-4={!icon}>
-			<slot name="title" />
+		<div class="collapse-title h-min min-h-0 py-2 {titleClass}" class:pe-4={!icon}>
+			<slot name="title" {open} />
 		</div>
 	{/if}
 
-	<div class="collapse-content min-w-0">
+	<div class="collapse-content min-w-0 {contentClass}">
 		<slot {open} />
 	</div>
 </div>

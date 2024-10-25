@@ -12,6 +12,7 @@ import { Item, Items } from './item';
 import { Money } from './money';
 import { Skills } from './skill';
 import { Persona } from './persona';
+import { Attack } from './attack';
 
 @inheritSerialization(VersionedCharacter)
 export class PathfinderCharacter extends VersionedCharacter {
@@ -37,6 +38,9 @@ export class PathfinderCharacter extends VersionedCharacter {
 	wis = new Ability('wis');
 	@autoserializeAs(Ability)
 	cha = new Ability('cha');
+
+	@autoserializeAs(Attack)
+	attacks: Attack[] = [];
 
 	@autoserializeAs(Skills)
 	skills = new Skills();
