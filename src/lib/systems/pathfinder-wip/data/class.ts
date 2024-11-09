@@ -50,4 +50,8 @@ export class Classes extends Array<Class> {
 	get level() {
 		return mapSum(this, (c) => c.level);
 	}
+
+	get bab() {
+		return mapSum(this, (c) => c.bab);
+	}
 }

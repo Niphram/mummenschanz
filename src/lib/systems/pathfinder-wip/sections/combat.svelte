@@ -1,29 +1,20 @@
 <script lang="ts">
 	import Collapse from '$lib/atoms/collapse.svelte';
+	import { dialogContext } from '$lib/components/dialog-provider.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import DragHandle from '$lib/icons/drag-handle.svelte';
+	import { withSign } from '$lib/utils';
+	import { char } from '../context';
+	import { Attack } from '../data/attack';
+	import AttackDialog from '../dialogs/attack-dialog.svelte';
 
-	let attacks = [
-		{
-			name: 'Rapier',
-			bonus: '+10',
-			crit_range: '18-20',
-			damage: '1d6+5 piercing',
-		},
-		{
-			name: 'Rapier (Studied Combat) With a long ass name',
-			bonus: '+12/+7/+2',
-			crit_range: '18-20',
-			damage: '1d6+5 piercing +2 (PD)',
-		},
-		{
-			name: 'Studied Strike',
-			bonus: '-',
-			crit_range: '-',
-			damage: '1d6 precision damage/sneak attack',
-		},
-	];
+	const c = char();
+	const { openDialog } = dialogContext();
 </script>
+
+<button class="btn btn-primary" on:click={() => ($c.attacks.push(new Attack()), ($c = $c))}
+	>ADD ATTACK (WIP)</button
+>
 
 <div class="grid-cols-[min-content repeat(4, auto)] grid w-full grid-flow-row justify-stretch">
 	<div class="col-span-5 grid grid-cols-subgrid text-center text-xs text-neutral-500">
@@ -45,8 +36,9 @@
 			swapThreshold: 0.65,
 		}}
 		keyProp="name"
-		bind:items={attacks}
+		bind:items={$c.attacks}
 		let:item={attack}
+		let:index
 	>
 		<div class="col-span-5 grid grid-cols-subgrid items-center">
 			<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
@@ -57,19 +49,20 @@
 				class="col-span-4 grid grid-cols-subgrid"
 				titleClass="col-span-4 grid grid-cols-subgrid"
 				icon="arrow"
+				on:contextmenu={() => openDialog(AttackDialog, { c, idx: index })}
 			>
 				<div slot="title" let:open class="col-span-4 grid grid-cols-subgrid items-center gap-x-2">
 					<div class="text-ellipsis" class:overflow-hidden={!open} class:whitespace-nowrap={!open}>
 						{attack.name}
 					</div>
-					<div class="text-center">{attack.bonus}</div>
-					<div class="text-center">{attack.crit_range}</div>
+					<div class="text-center">{attack.attackMods().map(withSign).join('/')}</div>
+					<div class="text-center">{'<critRange>'}</div>
 					<div
 						class="text-ellipsis text-center"
 						class:overflow-hidden={!open}
 						class:whitespace-nowrap={!open}
 					>
-						{attack.damage}
+						{'<damage>'}
 					</div>
 				</div>
 

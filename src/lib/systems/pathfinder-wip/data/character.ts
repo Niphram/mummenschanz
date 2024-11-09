@@ -5,14 +5,15 @@ import { autoserializeArrayAs } from '$lib/utils/serialize';
 
 import { MIGRATION } from '../migration';
 import { Ability } from './ability';
+import { Attack } from './attack';
 import { Class, Classes } from './class';
+import { Combat } from './combat';
 import { Config } from './config';
 import { HitPoints } from './hp';
 import { Item, Items } from './item';
 import { Money } from './money';
-import { Skills } from './skill';
 import { Persona } from './persona';
-import { Attack } from './attack';
+import { Skills } from './skill';
 
 @inheritSerialization(VersionedCharacter)
 export class PathfinderCharacter extends VersionedCharacter {
@@ -25,6 +26,9 @@ export class PathfinderCharacter extends VersionedCharacter {
 
 	@autoserializeAs(HitPoints)
 	hp = new HitPoints();
+
+	@autoserializeAs(Combat)
+	combat = new Combat();
 
 	@autoserializeAs(Ability)
 	str = new Ability('str');

@@ -19,13 +19,24 @@ export class Ability {
 	temp = macro('0');
 
 	@autoserialize
+	damage = 0;
+
+	@autoserialize
 	notes = '';
 
 	readonly total = derive(
 		(c: PathfinderCharacter) => c[this.key].base(c) + c[this.key].bonus(c) + c[this.key].temp(c),
 	);
 
+	get damageMod() {
+		return Math.floor(this.damage / 2);
+	}
+
 	readonly mod = derive((c: PathfinderCharacter) => Math.floor(c[this.key].total(c) / 2) - 5);
+
+	public healDamage() {
+		this.damage -= Math.sign(this.damage);
+	}
 
 	constructor(private key: AbilityKey) {}
 }

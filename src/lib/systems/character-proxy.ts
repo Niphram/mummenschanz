@@ -11,10 +11,10 @@ export function unproxy(instance: unknown): unknown {
 
 export type Proxied<C> = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	[P in keyof C]: C[P] extends Derive<any> ? { (): number }
+	[P in keyof C]: C[P] extends Derive<any, infer R> ? { (): R }
 	: C[P] extends Macro ? { expr: string; (): number }
 	: C[P] extends (...args: infer Args) => infer R ? (...args: Args) => R
-	: C[P] extends Array<infer S> ? Proxied<S>[] & Proxied<C[P]>
+	: C[P] extends Array<infer S> ? Proxied<S>[] & Proxied<C[P]> & { push: (...items: S[]) => number }
 	: C[P] extends object ? Proxied<C[P]>
 	: C[P];
 };
