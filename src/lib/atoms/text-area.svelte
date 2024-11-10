@@ -23,5 +23,5 @@
 		style:resize
 		{rows}
 		bind:value
-	/>
+	></textarea>
 </div>

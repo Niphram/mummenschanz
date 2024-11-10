@@ -1,30 +1,44 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { calculateNode } from '$lib/macro/evaluate';
 	import { NodeType, parse } from '$lib/macro/parser';
 	import type { Proxied, VersionedCharacter } from '$lib/systems';
 
-	export let c: Proxied<VersionedCharacter>;
-
-	export let value: string;
-
-	export let name: string;
-	export let label: string | undefined = undefined;
-	export let placeholder: string | undefined = undefined;
-
-	export let small = false;
-	export let optional = false;
-
-	let current = value;
-
-	$: parsedNode = parse(current);
-	$: evaluated = calculateNode(parsedNode, c);
-
-	$: valid =
-		parsedNode.type !== NodeType.Error || (!current && optional) || Number.isInteger(evaluated);
-
-	$: if (valid) {
-		value = current;
+	interface Props {
+		c: Proxied<VersionedCharacter>;
+		value: string;
+		name: string;
+		label?: string | undefined;
+		placeholder?: string | undefined;
+		small?: boolean;
+		optional?: boolean;
 	}
+
+	let {
+		c,
+		value = $bindable(),
+		name,
+		label = undefined,
+		placeholder = undefined,
+		small = false,
+		optional = false,
+	}: Props = $props();
+
+	let current = $state(value);
+
+	let parsedNode = $derived(parse(current));
+	let evaluated = $derived(calculateNode(parsedNode, c));
+
+	let valid = $derived(
+		parsedNode.type !== NodeType.Error || (!current && optional) || Number.isInteger(evaluated),
+	);
+
+	run(() => {
+		if (valid) {
+			value = current;
+		}
+	});
 </script>
 
 <div class="form-control w-full">
