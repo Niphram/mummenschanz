@@ -2,13 +2,15 @@
 	import type { Writable } from 'svelte/store';
 
 	import Divider from '$lib/atoms/divider.svelte';
-	import Icon from '$lib/atoms/icon.svelte';
 	import IntegerInput from '$lib/atoms/integer-input.svelte';
 	import ResponsiveDialogBase from '$lib/components/responsive-dialog-base.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import { t } from '$lib/i18n';
 	import type { Proxied } from '$lib/systems';
 
+	import ChevronUpDown from '$lib/icons/chevron-up-down.svelte';
+	import Plus from '$lib/icons/plus.svelte';
+	import Trash from '$lib/icons/trash.svelte';
 	import { Skill, type FateCondensedCharacter } from '../character';
 
 	export let c: Writable<Proxied<FateCondensedCharacter>>;
@@ -41,7 +43,7 @@
 
 		<div class="flex w-full flex-row gap-2">
 			<div class="drag-handle ml-2 flex w-6 items-center justify-center" role="button" tabindex="0">
-				<Icon type="DragHandle" class="size-6" />
+				<ChevronUpDown class="size-6" />
 			</div>
 
 			<div class="form-control w-full">
@@ -61,14 +63,14 @@
 				class="btn btn-square btn-warning btn-sm text-warning-content"
 				on:click|preventDefault={() => removeSkill(index)}
 			>
-				<Icon type="Remove" class="size-4" />
+				<Trash class="size-4" />
 			</button>
 		</div>
 	</SortableList>
 
 	<Divider>
 		<button class="btn btn-circle btn-primary btn-sm" on:click|preventDefault={addSkill}>
-			<Icon type="Add" class="size-6" />
+			<Plus class="size-6" />
 		</button>
 	</Divider>
 </ResponsiveDialogBase>

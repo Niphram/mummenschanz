@@ -2,7 +2,7 @@
 	import Collapse from '$lib/atoms/collapse.svelte';
 	import { dialogContext } from '$lib/components/dialog-provider.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
-	import DragHandle from '$lib/icons/drag-handle.svelte';
+	import ChevronUpDown from '$lib/icons/chevron-up-down.svelte';
 	import { withSign } from '$lib/utils';
 	import { char } from '../context';
 	import { Attack } from '../data/attack';
@@ -42,7 +42,7 @@
 	>
 		<div class="col-span-5 grid grid-cols-subgrid items-center">
 			<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
-				<DragHandle />
+				<ChevronUpDown class="size-6" />
 			</div>
 
 			<Collapse

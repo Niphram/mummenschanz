@@ -2,13 +2,13 @@
 	import { base } from '$app/paths';
 
 	import Divider from '$lib/atoms/divider.svelte';
-	import Icon from '$lib/atoms/icon.svelte';
 	import Loader from '$lib/atoms/loader.svelte';
 	import { deleteCharacter, listCharacters } from '$lib/character-store';
 	import { dialogContext } from '$lib/components/dialog-provider.svelte';
 	import ConfirmDialog from '$lib/dialogs/confirm-dialog.svelte';
 	import CreateCharacterDialog from '$lib/dialogs/create-character-dialog.svelte';
 	import { t } from '$lib/i18n';
+	import Plus from '$lib/icons/plus.svelte';
 	import { bytes, storage } from '$lib/utils/storage';
 	import { fade } from 'svelte/transition';
 
@@ -58,7 +58,7 @@
 {:then characters}
 	<div in:fade class="flex max-w-full grow flex-col gap-4">
 		<button class="btn btn-primary" on:click={() => openDialog(CreateCharacterDialog, {})}>
-			<Icon type="Add" class="size-6" />
+			<Plus class="size-6" />
 			Create new Character
 		</button>
 

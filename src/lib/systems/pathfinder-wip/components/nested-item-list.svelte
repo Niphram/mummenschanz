@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Collapse from '$lib/atoms/collapse.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
-	import DragHandle from '$lib/icons/drag-handle.svelte';
+	import ChevronUpDown from '$lib/icons/chevron-up-down.svelte';
 	import { unproxy, type Proxied } from '$lib/systems/character-proxy';
 	import { char } from '../context';
 	import type { Item } from '../data/item';
@@ -45,7 +45,7 @@
 
 	<div class="flex w-full flex-auto flex-row">
 		<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
-			<DragHandle />
+			<ChevronUpDown class="size-6" />
 		</div>
 
 		{#if !item.isContainer}
