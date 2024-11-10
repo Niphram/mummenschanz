@@ -6,8 +6,8 @@
 		name: string;
 		label?: string | undefined;
 		placeholder?: string | undefined;
-		min?: any;
-		max?: any;
+		min?: number;
+		max?: number;
 		small?: boolean;
 	}
 

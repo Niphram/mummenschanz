@@ -1,17 +1,11 @@
 <script lang="ts" module>
-	import {
-		getContext,
-		setContext,
-		type Component,
-		type ComponentProps,
-		type Snippet,
-	} from 'svelte';
+	import { getContext, setContext, type Component, type Snippet } from 'svelte';
 
 	const CONTEXT_SYMBOL = Symbol('Dialog Context');
 
 	type DialogContext = {
-		openDialog: <Props extends Record<string, any>, C extends Component<Props>>(
-			component: C,
+		openDialog: <Props extends Record<string, unknown>>(
+			component: Component<Props>,
 			props: Props,
 		) => void;
 
@@ -26,19 +20,22 @@
 <script lang="ts">
 	let dialog: HTMLDialogElement;
 
-	let dialogContent = $state.raw<{ component?: Component<any>; props: object }>({
+	let dialogContent = $state.raw<{
+		component?: Component<Record<string, unknown>>;
+		props: Record<string, unknown>;
+	}>({
 		component: undefined,
 		props: {},
 	});
 
-	function openDialog<Props extends Record<string, any>, C extends Component<Props>>(
-		component: C,
+	function openDialog<Props extends Record<string, unknown>>(
+		component: Component<Props>,
 		props: Props,
 	) {
 		dialogContent = {
 			component,
 			props,
-		};
+		} as typeof dialogContent;
 
 		dialog.showModal();
 	}

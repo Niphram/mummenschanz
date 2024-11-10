@@ -18,7 +18,7 @@ function calcAttribute<C extends NonNullable<unknown>>(path: string[], char: C):
 			default:
 				return NaN;
 		}
-	} catch (err) {
+	} catch (_err) {
 		return NaN;
 	}
 }

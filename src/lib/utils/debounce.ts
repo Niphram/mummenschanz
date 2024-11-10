@@ -7,7 +7,7 @@ export function debounce<A extends unknown[]>(func: (...args: A) => void, timeou
 	let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
 	return (...args: A) => {
-		timeoutId && clearTimeout(timeoutId);
+		if (timeoutId) clearTimeout(timeoutId);
 		timeoutId = setTimeout(() => func(...args), timeout);
 	};
 }

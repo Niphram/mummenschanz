@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { base } from '$app/paths';
 
 	import Divider from '$lib/atoms/divider.svelte';

@@ -1,3 +1,8 @@
+import tailwindTypography from '@tailwindcss/typography';
+import daisyui from 'daisyui';
+
+import { Config } from 'tailwindcss';
+
 const commonTheme = {
 	'--rounded-box': '0.4rem',
 	'--rounded-btn': '0.4rem',
@@ -5,13 +10,12 @@ const commonTheme = {
 	'--tab-radius': '0.4rem',
 };
 
-/** @type {import('tailwindcss').Config} */
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {},
 	},
-	plugins: [require('@tailwindcss/typography'), require('daisyui')],
+	plugins: [tailwindTypography, daisyui],
 	daisyui: {
 		themes: [
 			{
@@ -53,4 +57,4 @@ export default {
 			},
 		],
 	},
-};
+} satisfies Config;

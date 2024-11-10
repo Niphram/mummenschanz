@@ -1,4 +1,7 @@
 <script lang="ts" module>
+	// Needed to satisfy eslint
+	type T = unknown;
+
 	export const listMap = new WeakMap<HTMLElement, unknown[]>();
 </script>
 
@@ -18,7 +21,7 @@
 		options?: Options;
 		disabled?: boolean;
 		class?: string;
-		element?: keyof HTMLElementTagNameMap;
+		element?: string;
 		onMove?: ((item: T, targetArray: T[]) => boolean) | undefined;
 		item?: Snippet<[{ item: T; index: number }]>;
 		empty?: Snippet;
