@@ -1,28 +1,47 @@
 <script lang="ts">
-	export let value: number;
+	import { untrack } from 'svelte';
 
-	export let name: string;
-	export let label: string | undefined = undefined;
-	export let placeholder: string | undefined = undefined;
-
-	export let min = -Infinity;
-	export let max = Infinity;
-
-	export let small = false;
-
-	let current = value;
-
-	// Make sure to update the displayed value if the bound value changes
-	$: updateCurrent(value);
-	function updateCurrent(v: number) {
-		current = v;
+	interface Props {
+		value: number;
+		name: string;
+		label?: string | undefined;
+		placeholder?: string | undefined;
+		min?: any;
+		max?: any;
+		small?: boolean;
 	}
 
-	$: valid = Number.isInteger(current) && current >= min && current <= max;
+	let {
+		value = $bindable(),
+		name,
+		label = undefined,
+		placeholder = undefined,
+		min = -Infinity,
+		max = Infinity,
+		small = false,
+	}: Props = $props();
 
-	$: if (valid) {
-		value = current;
-	}
+	let current = $state(value);
+
+	let valid = $derived(Number.isInteger(current) && current >= min && current <= max);
+
+	// Update the bound value, if the input value is valid
+	$effect(() => {
+		if (valid) {
+			const tracked = current;
+			untrack(() => {
+				value = tracked;
+			});
+		}
+	});
+
+	// Update current value, if bound value changes
+	$effect(() => {
+		const tracked = value;
+		untrack(() => {
+			current = tracked;
+		});
+	});
 </script>
 
 <div class="form-control w-full">

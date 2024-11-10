@@ -9,16 +9,23 @@
 	import SmallLayout from './layouts/small.svelte';
 	import { setChar } from './context';
 
-	let windowWidth: number;
-	$: layout =
+	let windowWidth: number = $state(0);
+	let layout = $derived(
 		windowWidth >= 1024 ? LargeLayout
 			//: windowWidth >= 768 ? MediumLayout
-		: SmallLayout;
+		: SmallLayout,
+	);
 
-	export let c: Writable<Proxied<PathfinderCharacter>>;
+	interface Props {
+		c: Writable<Proxied<PathfinderCharacter>>;
+	}
+
+	let { c }: Props = $props();
 	setChar(c);
+
+	const SvelteComponent = $derived(layout);
 </script>
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-<svelte:component this={layout} />
+<SvelteComponent />

@@ -1,13 +1,21 @@
 <script lang="ts">
-	export let value: string;
+	interface Props {
+		value: string;
+		name: string;
+		label?: string | undefined;
+		placeholder?: string | undefined;
+		rows?: number;
+		resize?: 'none' | 'horizontal' | 'vertical' | 'both';
+	}
 
-	export let name: string;
-	export let label: string | undefined = undefined;
-	export let placeholder: string | undefined = undefined;
-
-	export let rows = 10;
-
-	export let resize: 'none' | 'horizontal' | 'vertical' | 'both' = 'none';
+	let {
+		value = $bindable(),
+		name,
+		label = undefined,
+		placeholder = undefined,
+		rows = 10,
+		resize = 'none',
+	}: Props = $props();
 </script>
 
 <div class="form-control w-full">

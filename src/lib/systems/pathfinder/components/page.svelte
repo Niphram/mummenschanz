@@ -3,7 +3,11 @@
 
 	import type { PathfinderCharacter } from '../data';
 
-	export let character: Writable<PathfinderCharacter>;
+	interface Props {
+		character: Writable<PathfinderCharacter>;
+	}
+
+	let { character }: Props = $props();
 </script>
 
 <h1>Pathfinder</h1>

@@ -1,41 +1,50 @@
-<script lang="ts" context="module">
-	// Needed to satisfy eslint
-	type T = unknown;
-
-	export const listMap = new WeakMap<HTMLElement, T[]>();
+<script lang="ts" module>
+	export const listMap = new WeakMap<HTMLElement, unknown[]>();
 </script>
 
 <script lang="ts" generics="T">
 	import Sortable from 'sortablejs';
-	import { onMount } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 
 	type Options = Omit<
 		Sortable.SortableOptions,
 		'onUpdate' | 'onAdd' | 'onRemove' | 'onMove' | 'onChoose' | 'disabled'
 	>;
 
-	export let items: T[];
-	export let options: Options | undefined = undefined;
+	interface Props {
+		items: T[];
+		keyProp: keyof T;
+		keyPrefix?: string;
+		options?: Options;
+		disabled?: boolean;
+		class?: string;
+		element?: keyof HTMLElementTagNameMap;
+		onMove?: ((item: T, targetArray: T[]) => boolean) | undefined;
+		item?: Snippet<[{ item: T; index: number }]>;
+		empty?: Snippet;
+	}
 
-	export let keyProp: keyof T;
-
-	export let disabled = false;
-
-	let className = '';
-	export { className as class };
-
-	export let keyPrefix: string = '';
-
-	export let element = 'div';
-
-	export let onMove: ((item: T, targetArray: T[]) => boolean) | undefined = undefined;
+	let {
+		items = $bindable(),
+		keyProp,
+		keyPrefix = '',
+		options = undefined,
+		disabled = false,
+		class: className = '',
+		element = 'div',
+		onMove = undefined,
+		item: item_render,
+		empty: empty_render,
+	}: Props = $props();
 
 	let listEl: HTMLElement;
 
-	let sortableInstance: Sortable | undefined;
+	let sortableInstance: Sortable | undefined = $state();
 
 	// Update 'disabled' if it changes
-	$: sortableInstance?.option('disabled', disabled);
+	$effect(() => {
+		sortableInstance?.option('disabled', disabled);
+	});
 
 	// The that was selected last
 	let lastSelectedItem: T;
@@ -79,10 +88,10 @@
 
 <svelte:element this={element} class={className} bind:this={listEl}>
 	{#each items as item, index (keyPrefix + item[keyProp])}
-		<slot {item} {index} />
+		{@render item_render?.({ item, index })}
 	{/each}
 
 	{#if items.length === 0}
-		<slot name="fallback" />
+		{@render empty_render?.()}
 	{/if}
 </svelte:element>

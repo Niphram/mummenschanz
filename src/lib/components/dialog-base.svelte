@@ -1,9 +1,16 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	import { dialogContext } from './dialog-provider.svelte';
 
 	const { closeDialog } = dialogContext();
 
-	export let title = '';
+	interface Props {
+		title?: string;
+		children?: Snippet<[closeDialog: typeof closeDialog]>;
+	}
+
+	let { title = '', children: children_render }: Props = $props();
 </script>
 
 <form method="dialog" class="modal-box pt-16">
@@ -12,7 +19,7 @@
 		<button class="btn btn-circle btn-ghost btn-sm ml-auto">✕</button>
 	</div>
 
-	<slot {closeDialog} />
+	{@render children_render?.(closeDialog)}
 </form>
 <form method="dialog" class="modal-backdrop">
 	<button>Close</button>

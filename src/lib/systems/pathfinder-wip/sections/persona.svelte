@@ -5,6 +5,7 @@
 	import { dialogContext } from '$lib/components/dialog-provider.svelte';
 	import { t } from '$lib/i18n';
 	import { parseTextWithMacros } from '$lib/macro/text';
+	import { preventDefault } from '$lib/utils/prevent-default';
 
 	import { char } from '../context';
 	import { FACET_KEYS } from '../data/persona';
@@ -24,15 +25,16 @@
 				<Collapse
 					icon="arrow"
 					open={true}
-					on:contextmenu={() => openDialog(PersonaFacetDialog, { c, facet })}
+					oncontextmenu={preventDefault(() => openDialog(PersonaFacetDialog, { c, facet }))}
 				>
-					<div
-						slot="title"
-						class="flex h-8 flex-row items-center justify-start gap-4 text-xl font-semibold md:h-4 md:text-base"
-					>
-						<span>{$c.persona[facet].rank}</span>
-						<span>{$t(`pathfinder_wip.persona.${facet}`)}</span>
-					</div>
+					{#snippet title()}
+						<div
+							class="flex h-8 flex-row items-center justify-start gap-4 text-xl font-semibold md:h-4 md:text-base"
+						>
+							<span>{$c.persona[facet].rank}</span>
+							<span>{$t(`pathfinder_wip.persona.${facet}`)}</span>
+						</div>
+					{/snippet}
 
 					{#each parseTextWithMacros($c.persona[facet].notes, $c).split('\n') as line}
 						<p>{line}</p>
@@ -41,7 +43,7 @@
 			{:else}
 				<button
 					class="btn justify-start md:btn-sm md:px-4"
-					on:contextmenu|preventDefault={() => openDialog(PersonaFacetDialog, { c, facet })}
+					oncontextmenu={preventDefault(() => openDialog(PersonaFacetDialog, { c, facet }))}
 				>
 					<div class="flex flex-row justify-start gap-4 text-xl font-semibold md:text-base">
 						<span>{$c.persona[facet].rank}</span>

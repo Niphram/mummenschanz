@@ -1,11 +1,16 @@
 <script lang="ts">
 	// TODO: Rework this component
+	import type { Component } from 'svelte';
 
-	import type { ComponentType } from 'svelte';
+	interface Props {
+		tabs: { label: string; component: Component }[];
+	}
 
-	export let tabs: { label: string; component: ComponentType }[];
+	let { tabs }: Props = $props();
 
-	let activeTab = 0;
+	let activeTab = $state(0);
+
+	const SvelteComponent = $derived(tabs[activeTab].component);
 </script>
 
 <div class="flex flex-col items-stretch gap-4">
@@ -23,6 +28,6 @@
 	</div>
 
 	<div>
-		<svelte:component this={tabs[activeTab].component} />
+		<SvelteComponent />
 	</div>
 </div>

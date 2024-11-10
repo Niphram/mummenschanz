@@ -1,15 +1,21 @@
 <script lang="ts">
+	import type { Writable } from 'svelte/store';
+
 	import IntegerInput from '$lib/atoms/integer-input.svelte';
 	import TextArea from '$lib/atoms/text-area.svelte';
 	import ResponsiveDialogBase from '$lib/components/responsive-dialog-base.svelte';
 	import { t } from '$lib/i18n';
 	import type { Proxied } from '$lib/systems/character-proxy';
-	import type { Writable } from 'svelte/store';
+
 	import type { PathfinderCharacter } from '../data/character';
 	import type { FacetKey } from '../data/persona';
 
-	export let c: Writable<Proxied<PathfinderCharacter>>;
-	export let facet: FacetKey;
+	interface Props {
+		c: Writable<Proxied<PathfinderCharacter>>;
+		facet: FacetKey;
+	}
+
+	let { c, facet }: Props = $props();
 </script>
 
 <ResponsiveDialogBase title={$t(`pathfinder_wip.persona.${facet}`)}>

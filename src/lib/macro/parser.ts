@@ -14,7 +14,7 @@ import {
 	seq,
 	str,
 	tok,
-	TokenError,
+	type TokenError,
 	TokenRangeError,
 	type Token as ParsecToken,
 	type Parser,

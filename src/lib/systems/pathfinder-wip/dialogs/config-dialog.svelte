@@ -1,11 +1,16 @@
 <script lang="ts">
 	import type { Proxied } from '$lib/systems/character-proxy';
 	import type { Writable } from 'svelte/store';
+
 	import type { PathfinderCharacter } from '../data/character';
 
 	export const title = 'Character Config';
 
-	export let c: Writable<Proxied<PathfinderCharacter>>;
+	interface Props {
+		c: Writable<Proxied<PathfinderCharacter>>;
+	}
+
+	let { c }: Props = $props();
 </script>
 
 <div class="flex flex-col gap-2">

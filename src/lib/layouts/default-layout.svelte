@@ -1,21 +1,29 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import type { Snippet } from 'svelte';
+
+	interface Props {
+		header?: Snippet;
+		children?: Snippet;
+	}
+
+	let { header, children: children_render }: Props = $props();
 </script>
 
 <div class="flex min-h-screen flex-col items-stretch gap-4">
 	<div class="flex grow flex-col gap-4">
 		<!-- HEADER -->
 		<div id="header" class="sticky top-0 z-40 flex w-full flex-col bg-base-200 drop-shadow-xl">
-			<slot name="header">
+			{#if header}{@render header()}{:else}
 				<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
 					<p class="text-lg font-bold">Mummenschanz (Work in Progress)</p>
 				</div>
-			</slot>
+			{/if}
 		</div>
 
 		<!-- Content -->
 		<div class="flex grow flex-col items-center px-4">
-			<slot />
+			{@render children_render?.()}
 		</div>
 	</div>
 

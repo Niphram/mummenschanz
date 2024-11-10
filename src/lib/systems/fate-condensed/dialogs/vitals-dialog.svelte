@@ -10,15 +10,21 @@
 
 	import { SHOW_OPTIONS, type FateCondensedCharacter } from '../character';
 
-	export let c: Writable<Proxied<FateCondensedCharacter>>;
+	interface Props {
+		c: Writable<Proxied<FateCondensedCharacter>>;
+	}
 
-	$: skills = $c.skills.filter((s) => s.name);
+	let { c }: Props = $props();
 
-	$: physical_error =
-		!!$c.physical_stress_skill && !$c.skills.find((s) => s.name === $c.physical_stress_skill);
+	let skills = $derived($c.skills.filter((s) => s.name));
 
-	$: mental_error =
-		!!$c.mental_stress_skill && !$c.skills.find((s) => s.name === $c.mental_stress_skill);
+	let physical_error = $derived(
+		!!$c.physical_stress_skill && !$c.skills.find((s) => s.name === $c.physical_stress_skill),
+	);
+
+	let mental_error = $derived(
+		!!$c.mental_stress_skill && !$c.skills.find((s) => s.name === $c.mental_stress_skill),
+	);
 </script>
 
 <ResponsiveDialogBase title={$t('fate_condensed.vitals')}>
@@ -43,11 +49,14 @@
 					label={$t('fate_condensed.skill')}
 					bind:value={$c.physical_stress_skill}
 					error={physical_error}
-					let:option
 				>
-					<option slot="once" value="">---</option>
+					{#snippet once()}
+						<option value="">---</option>
+					{/snippet}
 
-					<option value={option.name}>{option.name}</option>
+					{#snippet children(option)}
+						<option value={option.name}>{option.name}</option>
+					{/snippet}
 				</Select>
 			</div>
 		</div>
@@ -71,11 +80,14 @@
 					label={$t('fate_condensed.skill')}
 					bind:value={$c.mental_stress_skill}
 					error={mental_error}
-					let:option
 				>
-					<option slot="once" value="">---</option>
+					{#snippet once()}
+						<option value="">---</option>
+					{/snippet}
 
-					<option value={option.name}>{option.name}</option>
+					{#snippet children(option)}
+						<option value={option.name}>{option.name}</option>
+					{/snippet}
 				</Select>
 			</div>
 		</div>
@@ -88,9 +100,10 @@
 				options={SHOW_OPTIONS}
 				label={$t('fate_condensed.show_additional_mild_consequence')}
 				bind:value={$c.show_additional_consequence}
-				let:option
 			>
-				<option value={option}>{$t(`general.ui.${option}`)}</option>
+				{#snippet children(option)}
+					<option value={option}>{$t(`general.ui.${option}`)}</option>
+				{/snippet}
 			</Select>
 		</div>
 	</div>

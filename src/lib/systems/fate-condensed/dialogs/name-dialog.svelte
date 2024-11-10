@@ -7,7 +7,11 @@
 
 	import type { FateCondensedCharacter } from '../character';
 
-	export let c: Writable<Proxied<FateCondensedCharacter>>;
+	interface Props {
+		c: Writable<Proxied<FateCondensedCharacter>>;
+	}
+
+	let { c }: Props = $props();
 </script>
 
 <ResponsiveDialogBase title={$t('general.character.name')}>

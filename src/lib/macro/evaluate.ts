@@ -8,7 +8,8 @@ function calcAttribute<C extends NonNullable<unknown>>(path: string[], char: C):
 		const val: unknown = path.reduce((c, p) => c[p], char as Record<string, any>);
 
 		if (isDerive(val) || isMacro(val)) {
-			return val(char);
+			const res = val(char);
+			return typeof res === 'number' ? res : NaN;
 		}
 
 		switch (typeof val) {

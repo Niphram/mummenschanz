@@ -6,12 +6,8 @@
 	import type { AbilityKey } from '../data/ability';
 	import MacroInput from '$lib/atoms/macro-input.svelte';
 
-	interface Props {
-		c: Writable<Proxied<PathfinderCharacter>>;
-		ability: AbilityKey;
-	}
-
-	let { c, ability }: Props = $props();
+	export let c: Writable<Proxied<PathfinderCharacter>>;
+	export let ability: AbilityKey;
 </script>
 
 <ResponsiveDialogBase title="Ability">

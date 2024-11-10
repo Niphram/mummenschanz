@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { nanoid } from 'nanoid';
 
-	export let value: number;
-	export let max: number;
+	interface Props {
+		value: number;
+		max: number;
+	}
+
+	let { value = $bindable(), max }: Props = $props();
 
 	const name = nanoid();
 
@@ -23,7 +27,7 @@
 			class="mask mask-parallelogram bg-accent"
 			class:hidden={idx === 0}
 			checked={idx === value}
-			on:click={() => onClick(idx)}
+			onclick={() => onClick(idx)}
 		/>
 	{/each}
 </div>

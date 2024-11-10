@@ -8,14 +8,18 @@
 
 	export const title = '';
 
-	export let c: Writable<Proxied<PathfinderCharacter>>;
+	interface Props {
+		c: Writable<Proxied<PathfinderCharacter>>;
+	}
+
+	let { c }: Props = $props();
 </script>
 
 <div class="flex flex-col gap-2">
 	<div class="form-control">
 		<label class="label cursor-pointer">
 			<span class="label-text">Dark Mode</span>
-			<input type="checkbox" class="toggle" checked={$isDarkMode} on:change={toggleDarkMode} />
+			<input type="checkbox" class="toggle" checked={$isDarkMode} onchange={toggleDarkMode} />
 		</label>
 	</div>
 

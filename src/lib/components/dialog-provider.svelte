@@ -1,19 +1,18 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import {
 		getContext,
 		setContext,
+		type Component,
 		type ComponentProps,
-		type ComponentType,
-		type SvelteComponent,
+		type Snippet,
 	} from 'svelte';
-	import { writable } from 'svelte/store';
 
 	const CONTEXT_SYMBOL = Symbol('Dialog Context');
 
 	type DialogContext = {
-		openDialog: <T extends SvelteComponent>(
-			component: ComponentType<T>,
-			props: ComponentProps<T>,
+		openDialog: <Props extends Record<string, any>, C extends Component<Props>>(
+			component: C,
+			props: Props,
 		) => void;
 
 		closeDialog: () => void;
@@ -27,16 +26,16 @@
 <script lang="ts">
 	let dialog: HTMLDialogElement;
 
-	const dialogContent = writable<{ component?: ComponentType; props: object }>({
+	let dialogContent = $state.raw<{ component?: Component<any>; props: object }>({
 		component: undefined,
 		props: {},
 	});
 
-	function openDialog<T extends SvelteComponent>(
-		component: ComponentType<T>,
-		props: ComponentProps<T>,
+	function openDialog<Props extends Record<string, any>, C extends Component<Props>>(
+		component: C,
+		props: Props,
 	) {
-		$dialogContent = {
+		dialogContent = {
 			component,
 			props,
 		};
@@ -53,17 +52,26 @@
 		closeDialog,
 	} satisfies DialogContext;
 
-	function onClose() {
-		$dialogContent = { props: {} };
+	function onclose() {
+		dialogContent = { props: {} };
 	}
 
 	setContext(CONTEXT_SYMBOL, context);
+
+	interface Props {
+		children?: Snippet;
+	}
+
+	let { children: children_render }: Props = $props();
 </script>
 
-<dialog class="modal" bind:this={dialog} on:close={onClose}>
-	{#key $dialogContent}
-		<svelte:component this={$dialogContent.component} {...$dialogContent.props} />
-	{/key}
+<dialog class="modal" bind:this={dialog} {onclose}>
+	{#if dialogContent.component}
+		<!--Can this key be removed?-->
+		{#key dialogContent}
+			<dialogContent.component {...dialogContent.props} />
+		{/key}
+	{/if}
 </dialog>
 
-<slot />
+{@render children_render?.()}

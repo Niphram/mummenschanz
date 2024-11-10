@@ -1,15 +1,25 @@
 <script lang="ts">
+	import type { Writable } from 'svelte/store';
+
+	import Select from '$lib/atoms/select.svelte';
 	import ResponsiveDialogBase from '$lib/components/responsive-dialog-base.svelte';
 	import type { Proxied } from '$lib/systems/character-proxy';
-	import type { Writable } from 'svelte/store';
-	import type { PathfinderCharacter } from '../data/character';
-	import Select from '$lib/atoms/select.svelte';
-	import { ATTACK_BASE } from '../data/attack';
-	import { ABILITY_KEYS } from '../data/ability';
 
-	export let c: Writable<Proxied<PathfinderCharacter>>;
-	export let idx: number;
+	import { ABILITY_KEYS } from '../data/ability';
+	import { ATTACK_BASE } from '../data/attack';
+	import type { PathfinderCharacter } from '../data/character';
+
+	interface Props {
+		c: Writable<Proxied<PathfinderCharacter>>;
+		idx: number;
+	}
+
+	let { c, idx }: Props = $props();
 </script>
+
+{#snippet once()}
+	<option value={undefined}>None</option>
+{/snippet}
 
 <ResponsiveDialogBase title="Attack">
 	<h1>WIP</h1>
@@ -18,19 +28,21 @@
 		label="Base"
 		options={ATTACK_BASE}
 		bind:value={$c.attacks[idx].attackBase}
-		let:option
+		{once}
 	>
-		<option slot="once" value={undefined}>None</option>
-		<option value={option}>{option}</option>
+		{#snippet children(option)}
+			<option value={option}>{option}</option>
+		{/snippet}
 	</Select>
 	<Select
 		name="attackAbility"
 		label="Ability"
 		options={ABILITY_KEYS}
 		bind:value={$c.attacks[idx].attackAbility}
-		let:option
+		{once}
 	>
-		<option slot="once" value={undefined}>None</option>
-		<option value={option}>{option}</option>
+		{#snippet children(option)}
+			<option value={option}>{option}</option>
+		{/snippet}
 	</Select>
 </ResponsiveDialogBase>

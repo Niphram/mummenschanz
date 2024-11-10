@@ -5,7 +5,11 @@
 
 	import type { KidsOnBikesCharacter } from './character';
 
-	export let c: Writable<Proxied<KidsOnBikesCharacter>>;
+	interface Props {
+		c: Writable<Proxied<KidsOnBikesCharacter>>;
+	}
+
+	let { c }: Props = $props();
 </script>
 
 <h1>Kids on Bikes</h1>

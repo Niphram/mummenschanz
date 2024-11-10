@@ -6,13 +6,17 @@
 
 	const c = char();
 
-	export let key: AbilityKey;
+	interface Props {
+		key: AbilityKey;
+	}
 
-	$: mod = $c[key].mod();
-	$: total = $c[key].total();
-	$: temp = $c[key].temp();
+	let { key }: Props = $props();
 
-	$: notes = $c[key].notes;
+	let mod = $derived($c[key].mod());
+	let total = $derived($c[key].total());
+	let temp = $derived($c[key].temp());
+
+	let notes = $derived($c[key].notes);
 </script>
 
 <button class="btn h-auto p-0">

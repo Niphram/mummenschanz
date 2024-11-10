@@ -74,4 +74,4 @@
 	</div>
 </div>
 
-<button on:click={() => openDialog(ConfigDialog, { c })}>CONFIG</button>
+<button onclick={() => openDialog(ConfigDialog, { c })}>CONFIG</button>

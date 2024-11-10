@@ -6,12 +6,17 @@
 	import IntegerInput from '$lib/atoms/integer-input.svelte';
 	import Divider from '$lib/atoms/divider.svelte';
 	import MacroInput from '$lib/atoms/macro-input.svelte';
+	import { preventDefault } from '$lib/utils/prevent-default';
 
-	export let c: Writable<Proxied<PathfinderCharacter>>;
+	interface Props {
+		c: Writable<Proxied<PathfinderCharacter>>;
+	}
 
-	$: conHp = $c.hp.conHp();
+	let { c }: Props = $props();
 
-	let modifyAmount = 1;
+	let conHp = $derived($c.hp.conHp());
+
+	let modifyAmount = $state(1);
 </script>
 
 <ResponsiveDialogBase title="Hit Points">
@@ -26,7 +31,7 @@
 						type="number"
 						class="input input-bordered w-full text-center text-2xl"
 						value={$c.hp.current()}
-						on:input={(e) => ($c.hp.damage_taken = $c.hp.max() - +e.currentTarget.value)}
+						oninput={(e) => ($c.hp.damage_taken = $c.hp.max() - +e.currentTarget.value)}
 					/>
 				</div>
 
@@ -57,7 +62,7 @@
 			<div class="flex h-min flex-row items-stretch gap-4">
 				<div class="flex flex-1 basis-0 flex-col">
 					<button
-						on:click|preventDefault={() => ($c.hp.heal(modifyAmount), ($c = $c))}
+						onclick={preventDefault(() => ($c.hp.heal(modifyAmount), ($c = $c)))}
 						class="btn grow bg-green-500 px-2 text-lg lg:text-xl">Heal</button
 					>
 				</div>
@@ -69,11 +74,11 @@
 				/>
 				<div class="flex flex-1 basis-0 flex-col gap-2">
 					<button
-						on:click|preventDefault={() => ($c.hp.dealLethal(modifyAmount), ($c = $c))}
+						onclick={preventDefault(() => ($c.hp.dealLethal(modifyAmount), ($c = $c)))}
 						class="btn grow bg-red-500 px-2 text-lg lg:text-xl">Lethal</button
 					>
 					<button
-						on:click|preventDefault={() => ($c.hp.dealNonLethal(modifyAmount), ($c = $c))}
+						onclick={preventDefault(() => ($c.hp.dealNonLethal(modifyAmount), ($c = $c)))}
 						class="btn grow bg-orange-500 px-2 text-lg lg:text-xl">Non-Lethal</button
 					>
 				</div>

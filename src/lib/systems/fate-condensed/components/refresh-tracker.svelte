@@ -1,5 +1,9 @@
 <script lang="ts">
-	export let value: number;
+	interface Props {
+		value: number;
+	}
+
+	let { value = $bindable() }: Props = $props();
 
 	function add() {
 		value = Math.min(value + 1, 99);
@@ -11,9 +15,9 @@
 </script>
 
 <div class="flex flex-row items-center gap-4">
-	<button class="btn btn-square btn-lg text-4xl" on:click={add}>+</button>
+	<button class="btn btn-square btn-lg text-4xl" onclick={add}>+</button>
 
 	<span class="font-mono text-6xl">{value.toString().padStart(2, '0')}</span>
 
-	<button class="btn btn-square btn-lg text-4xl" on:click={subtract}>-</button>
+	<button class="btn btn-square btn-lg text-4xl" onclick={subtract}>-</button>
 </div>

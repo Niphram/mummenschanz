@@ -11,9 +11,13 @@
 
 	const { openDialog } = dialogContext();
 
-	$: pages = [{ key: 'character', component: CharacterPage, active: true }] as const;
+	let pages = $derived([{ key: 'character', component: CharacterPage, active: true }] as const);
 
-	export let c: Writable<Proxied<PathfinderCharacter>>;
+	interface Props {
+		c: Writable<Proxied<PathfinderCharacter>>;
+	}
+
+	let { c }: Props = $props();
 	setChar(c);
 </script>
 
@@ -58,16 +62,21 @@
 	>
 		{#each pages as { key, component, active } (key)}
 			{#if active}
+				{@const SvelteComponent = component}
 				<div id={key} class="w-full flex-none snap-center snap-always overflow-y-scroll p-4">
-					<svelte:component this={component} />
-					<div class="h-16" />
+					<SvelteComponent />
+					<div class="h-16"></div>
 				</div>
 			{/if}
 		{/each}
 	</div>
 
 	<div class="fixed bottom-4 right-4">
-		<button class="btn btn-circle btn-primary" on:click={() => openDialog(PageDialog, { c })}>
+		<button
+			class="btn btn-circle btn-primary"
+			aria-label="Open Navigation"
+			onclick={() => openDialog(PageDialog, { c })}
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"

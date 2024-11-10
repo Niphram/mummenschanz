@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Self from './nested-item-list.svelte';
+
 	import Collapse from '$lib/atoms/collapse.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import ChevronUpDown from '$lib/icons/chevron-up-down.svelte';
@@ -38,40 +40,44 @@
 	keyProp="id"
 	{disabled}
 	class="flex flex-col gap-2 {className}"
-	let:item
-	let:index
 >
-	<div slot="fallback" class="text-center">No items</div>
+	{#snippet empty()}
+		<div class="text-center">No items</div>
+	{/snippet}
 
-	<div class="flex w-full flex-auto flex-row">
-		<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
-			<ChevronUpDown class="size-6" />
+	{#snippet item({ item, index })}
+		<div class="flex w-full flex-auto flex-row">
+			<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+				<ChevronUpDown class="size-6" />
+			</div>
+
+			{#if !item.isContainer}
+				<button class="btn btn-sm min-w-0 flex-auto truncate md:btn-md">
+					<span class="truncate">
+						{item.quantity}x {item.name}
+					</span>
+				</button>
+			{:else}
+				<Collapse icon="arrow">
+					{#snippet title()}
+						<span class="text-sm font-semibold" class:underline={item.equipped}>
+							{item.name}
+						</span>
+						<span class="badge badge-md">
+							ITEMS {item.contents.length}
+						</span>
+					{/snippet}
+
+					{#snippet children(open)}
+						<Self
+							bind:items={items[index].contents}
+							parentId={item.id}
+							disabled={!open}
+							class="rounded-lg bg-base-100 p-2 pl-0"
+						/>
+					{/snippet}
+				</Collapse>
+			{/if}
 		</div>
-
-		{#if !item.isContainer}
-			<button class="btn btn-sm min-w-0 flex-auto truncate md:btn-md">
-				<span class="truncate">
-					{item.quantity}x {item.name}
-				</span>
-			</button>
-		{:else}
-			<Collapse icon="arrow" let:open>
-				<svelte:fragment slot="title">
-					<span class="text-sm font-semibold" class:underline={item.equipped}>
-						{item.name}
-					</span>
-					<span class="badge badge-md">
-						ITEMS {item.contents.length}
-					</span>
-				</svelte:fragment>
-
-				<svelte:self
-					bind:items={items[index].contents}
-					parentId={item.id}
-					disabled={!open}
-					class="rounded-lg bg-base-100 p-2 pl-0"
-				/>
-			</Collapse>
-		{/if}
-	</div>
+	{/snippet}
 </SortableList>

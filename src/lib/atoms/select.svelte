@@ -1,19 +1,26 @@
-<script lang="ts" context="module">
-	// Needed to satisfy eslint
-	type V = unknown;
-	type T = unknown;
-</script>
-
 <script lang="ts" generics="V, T">
-	export let name: string;
+	import type { Snippet } from 'svelte';
 
-	export let label: string | undefined = undefined;
+	interface Props {
+		name: string;
+		label?: string;
+		options?: readonly T[];
+		error?: boolean;
+		value: V;
 
-	export let options: readonly T[] = [];
+		children: Snippet<[option: T]>;
+		once?: Snippet;
+	}
 
-	export let error = false;
-
-	export let value: V;
+	let {
+		name,
+		label = undefined,
+		options = [],
+		error = $bindable(false),
+		value = $bindable(),
+		children: children_render,
+		once: once_render,
+	}: Props = $props();
 </script>
 
 <div class="form-control w-full">
@@ -23,10 +30,10 @@
 		</label>
 	{/if}
 	<select {name} class="select select-bordered w-full" class:select-error={error} bind:value>
-		<slot name="once" />
+		{@render once_render?.()}
 
 		{#each options as option (option)}
-			<slot {option} />
+			{@render children_render(option)}
 		{/each}
 	</select>
 </div>

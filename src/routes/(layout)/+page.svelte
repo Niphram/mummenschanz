@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { base } from '$app/paths';
 
 	import Divider from '$lib/atoms/divider.svelte';
@@ -16,7 +18,7 @@
 
 	let selectedSystem: string | undefined;
 
-	$: characterList = listCharacters(selectedSystem);
+	let characterList = $state(listCharacters(selectedSystem));
 
 	async function deleteChar(id: string) {
 		openDialog(ConfirmDialog, {
@@ -57,7 +59,7 @@
 	</div>
 {:then characters}
 	<div in:fade class="flex max-w-full grow flex-col gap-4">
-		<button class="btn btn-primary" on:click={() => openDialog(CreateCharacterDialog, {})}>
+		<button class="btn btn-primary" onclick={() => openDialog(CreateCharacterDialog, {})}>
 			<Plus class="size-6" />
 			Create new Character
 		</button>
@@ -81,7 +83,7 @@
 						</span>
 					</a>
 
-					<button on:click={() => deleteChar(char.id)} class="btn-xl btn btn-warning">
+					<button onclick={() => deleteChar(char.id)} class="btn-xl btn btn-warning">
 						Delete
 					</button>
 				</div>

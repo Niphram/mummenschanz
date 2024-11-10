@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { calculateNode } from '$lib/macro/evaluate';
 	import { NodeType, parse } from '$lib/macro/parser';
 	import type { Proxied, VersionedCharacter } from '$lib/systems';
@@ -34,7 +32,7 @@
 		parsedNode.type !== NodeType.Error || (!current && optional) || Number.isInteger(evaluated),
 	);
 
-	run(() => {
+	$effect(() => {
 		if (valid) {
 			value = current;
 		}

@@ -8,15 +8,15 @@
 
 	const c = char();
 
-	$: staggered = $c.hp.non_lethal === $c.hp.current() + $c.hp.temp;
-	$: unconscious = $c.hp.non_lethal > $c.hp.current() + $c.hp.temp;
+	let staggered = $derived($c.hp.non_lethal === $c.hp.current() + $c.hp.temp);
+	let unconscious = $derived($c.hp.non_lethal > $c.hp.current() + $c.hp.temp);
 </script>
 
 <button
 	class="btn h-auto max-h-none px-2 py-0 md:w-40"
 	class:bg-orange-500={staggered}
 	class:bg-red-500={unconscious}
-	on:click={() => openDialog(HpDialog, { c })}
+	onclick={() => openDialog(HpDialog, { c })}
 >
 	<div
 		class="flex w-full flex-row divide-x-2 divide-base-100 text-center md:flex-col md:divide-x-0 md:divide-y-2"

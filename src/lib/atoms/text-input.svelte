@@ -1,11 +1,19 @@
 <script lang="ts">
-	export let value: string;
+	interface Props {
+		value: string;
+		name: string;
+		label?: string | undefined;
+		placeholder?: string | undefined;
+		small?: boolean;
+	}
 
-	export let name: string;
-	export let label: string | undefined = undefined;
-	export let placeholder: string | undefined = undefined;
-
-	export let small = false;
+	let {
+		value = $bindable(),
+		name,
+		label = undefined,
+		placeholder = undefined,
+		small = false,
+	}: Props = $props();
 </script>
 
 <div class="form-control w-full">

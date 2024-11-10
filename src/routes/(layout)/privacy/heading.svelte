@@ -1,7 +1,13 @@
 <script lang="ts">
-	export let type: 'h1' | 'h2' | 'h3';
+	import type { Snippet } from 'svelte';
 
-	export let id: string | undefined = undefined;
+	interface Props {
+		id?: string;
+		type: 'h1' | 'h2' | 'h3';
+		children?: Snippet;
+	}
+
+	let { type, id = undefined, children: children_render }: Props = $props();
 </script>
 
 <svelte:element this={type} {id}>
@@ -14,5 +20,5 @@
 			</span>
 		</a>
 	{/if}
-	<slot />
+	{@render children_render?.()}
 </svelte:element>

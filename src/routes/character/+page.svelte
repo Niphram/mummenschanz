@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { beforeUpdate } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	import { goto } from '$app/navigation';
@@ -10,8 +9,9 @@
 	import { loadCharacter } from '$lib/character-store';
 	import DefaultLayout from '$lib/layouts/default-layout.svelte';
 
-	let id: string | null;
-	beforeUpdate(() => {
+	let id: string | null = $state(null);
+
+	$effect.pre(() => {
 		id = $page.url.searchParams.get('id');
 
 		if (!id) {
@@ -32,7 +32,7 @@
 			</div>
 		{:then data}
 			<div in:fade>
-				<svelte:component this={data.SheetComponent} c={data.character} />
+				<data.SheetComponent c={data.character} />
 			</div>
 		{:catch err}
 			<div in:fade>

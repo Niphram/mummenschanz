@@ -6,14 +6,19 @@
 	import ResponsiveDialogBase from '$lib/components/responsive-dialog-base.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import { t } from '$lib/i18n';
-	import type { Proxied } from '$lib/systems';
-
 	import ChevronUpDown from '$lib/icons/chevron-up-down.svelte';
 	import Plus from '$lib/icons/plus.svelte';
 	import Trash from '$lib/icons/trash.svelte';
+	import type { Proxied } from '$lib/systems';
+	import { preventDefault } from '$lib/utils/prevent-default';
+
 	import { Skill, type FateCondensedCharacter } from '../character';
 
-	export let c: Writable<Proxied<FateCondensedCharacter>>;
+	interface Props {
+		c: Writable<Proxied<FateCondensedCharacter>>;
+	}
+
+	let { c }: Props = $props();
 
 	function removeSkill(index: number) {
 		$c.skills.splice(index, 1);
@@ -37,39 +42,46 @@
 		}}
 		bind:items={$c.skills}
 		keyProp="id"
-		let:index
 	>
-		<div slot="fallback">{$t('fate_condensed.no_skills')}</div>
+		{#snippet empty()}
+			<div>{$t('fate_condensed.no_skills')}</div>
+		{/snippet}
 
-		<div class="flex w-full flex-row gap-2">
-			<div class="drag-handle ml-2 flex w-6 items-center justify-center" role="button" tabindex="0">
-				<ChevronUpDown class="size-6" />
+		{#snippet item({ index })}
+			<div class="flex w-full flex-row gap-2">
+				<div
+					class="drag-handle ml-2 flex w-6 items-center justify-center"
+					role="button"
+					tabindex="0"
+				>
+					<ChevronUpDown class="size-6" />
+				</div>
+
+				<div class="form-control w-full">
+					<input
+						name="name"
+						placeholder={$t('fate_condensed.unnamed_skill')}
+						class="input input-sm input-bordered w-full"
+						bind:value={$c.skills[index].name}
+					/>
+				</div>
+
+				<div class="w-32">
+					<IntegerInput name="bonus" min={0} max={10} bind:value={$c.skills[index].bonus} small />
+				</div>
+
+				<button
+					class="btn btn-square btn-warning btn-sm text-warning-content"
+					onclick={preventDefault(() => removeSkill(index))}
+				>
+					<Trash class="size-4" />
+				</button>
 			</div>
-
-			<div class="form-control w-full">
-				<input
-					name="name"
-					placeholder={$t('fate_condensed.unnamed_skill')}
-					class="input input-bordered input-sm w-full"
-					bind:value={$c.skills[index].name}
-				/>
-			</div>
-
-			<div class="w-32">
-				<IntegerInput name="bonus" min={0} max={10} bind:value={$c.skills[index].bonus} small />
-			</div>
-
-			<button
-				class="btn btn-square btn-warning btn-sm text-warning-content"
-				on:click|preventDefault={() => removeSkill(index)}
-			>
-				<Trash class="size-4" />
-			</button>
-		</div>
+		{/snippet}
 	</SortableList>
 
 	<Divider>
-		<button class="btn btn-circle btn-primary btn-sm" on:click|preventDefault={addSkill}>
+		<button class="btn btn-circle btn-primary btn-sm" onclick={preventDefault(addSkill)}>
 			<Plus class="size-6" />
 		</button>
 	</Divider>

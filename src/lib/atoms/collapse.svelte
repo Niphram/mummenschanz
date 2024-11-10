@@ -1,13 +1,28 @@
 <script lang="ts">
-	export let open = false;
+	import type { Snippet } from 'svelte';
+	import type { MouseEventHandler } from 'svelte/elements';
 
-	export let icon: 'arrow' | 'plus' | undefined = undefined;
+	interface Props {
+		open?: boolean;
+		icon?: 'arrow' | 'plus' | undefined;
+		class?: string;
+		titleClass?: string;
+		contentClass?: string;
+		oncontextmenu?: MouseEventHandler<HTMLDivElement>;
+		title?: Snippet<[open: boolean]>;
+		children?: Snippet<[open: boolean]>;
+	}
 
-	let className: string = '';
-	export { className as class };
-
-	export let titleClass: string = '';
-	export let contentClass: string = '';
+	let {
+		open = $bindable(false),
+		icon = undefined,
+		class: className = '',
+		titleClass = '',
+		contentClass = '',
+		oncontextmenu,
+		title: title_render,
+		children: children_render,
+	}: Props = $props();
 
 	function toggleOpen() {
 		open = !open;
@@ -28,8 +43,6 @@
 			toggleOpen();
 		}
 	}
-
-	$: console.log(open);
 </script>
 
 <div
@@ -38,21 +51,21 @@
 	class:collapse-plus={icon === 'plus'}
 	class:collapse-open={open}
 	class:collapse-close={!open}
-	on:click={toggleOpen}
-	on:contextmenu|preventDefault
-	on:keydown={keydownHandler}
-	on:keyup={keyupHandler}
+	onclick={toggleOpen}
+	{oncontextmenu}
+	onkeydown={keydownHandler}
+	onkeyup={keyupHandler}
 	role="button"
 	tabindex="0"
 >
-	{#if $$slots.title}
+	{#if title_render}
 		<div class="collapse-title h-min min-h-0 py-2 {titleClass}" class:pe-4={!icon}>
-			<slot name="title" {open} />
+			{@render title_render(open)}
 		</div>
 	{/if}
 
 	<div class="collapse-content min-w-0 {contentClass}">
-		<slot {open} />
+		{@render children_render?.(open)}
 	</div>
 </div>
 

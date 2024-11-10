@@ -4,6 +4,7 @@
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import ChevronUpDown from '$lib/icons/chevron-up-down.svelte';
 	import { withSign } from '$lib/utils';
+	import { preventDefault } from '$lib/utils/prevent-default';
 	import { char } from '../context';
 	import { Attack } from '../data/attack';
 	import AttackDialog from '../dialogs/attack-dialog.svelte';
@@ -12,7 +13,7 @@
 	const { openDialog } = dialogContext();
 </script>
 
-<button class="btn btn-primary" on:click={() => ($c.attacks.push(new Attack()), ($c = $c))}
+<button class="btn btn-primary" onclick={() => ($c.attacks.push(new Attack()), ($c = $c))}
 	>ADD ATTACK (WIP)</button
 >
 
@@ -35,39 +36,45 @@
 			fallbackOnBody: true,
 			swapThreshold: 0.65,
 		}}
-		keyProp="name"
+		keyProp="id"
 		bind:items={$c.attacks}
-		let:item={attack}
-		let:index
 	>
-		<div class="col-span-5 grid grid-cols-subgrid items-center">
-			<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
-				<ChevronUpDown class="size-6" />
-			</div>
-
-			<Collapse
-				class="col-span-4 grid grid-cols-subgrid"
-				titleClass="col-span-4 grid grid-cols-subgrid"
-				icon="arrow"
-				on:contextmenu={() => openDialog(AttackDialog, { c, idx: index })}
-			>
-				<div slot="title" let:open class="col-span-4 grid grid-cols-subgrid items-center gap-x-2">
-					<div class="text-ellipsis" class:overflow-hidden={!open} class:whitespace-nowrap={!open}>
-						{attack.name}
-					</div>
-					<div class="text-center">{attack.attackMods().map(withSign).join('/')}</div>
-					<div class="text-center">{'<critRange>'}</div>
-					<div
-						class="text-ellipsis text-center"
-						class:overflow-hidden={!open}
-						class:whitespace-nowrap={!open}
-					>
-						{'<damage>'}
-					</div>
+		{#snippet item({ item: attack, index })}
+			<div class="col-span-5 grid grid-cols-subgrid items-center">
+				<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+					<ChevronUpDown class="size-6" />
 				</div>
 
-				<div>Content</div>
-			</Collapse>
-		</div>
+				<Collapse
+					class="col-span-4 grid grid-cols-subgrid"
+					titleClass="col-span-4 grid grid-cols-subgrid"
+					icon="arrow"
+					oncontextmenu={preventDefault(() => openDialog(AttackDialog, { c, idx: index }))}
+				>
+					{#snippet title(open)}
+						<div class="col-span-4 grid grid-cols-subgrid items-center gap-x-2">
+							<div
+								class="text-ellipsis"
+								class:overflow-hidden={!open}
+								class:whitespace-nowrap={!open}
+							>
+								{attack.name}
+							</div>
+							<div class="text-center">{attack.attackMods().map(withSign).join('/')}</div>
+							<div class="text-center">{'<critRange>'}</div>
+							<div
+								class="text-ellipsis text-center"
+								class:overflow-hidden={!open}
+								class:whitespace-nowrap={!open}
+							>
+								{'<damage>'}
+							</div>
+						</div>
+					{/snippet}
+
+					<div>Content</div>
+				</Collapse>
+			</div>
+		{/snippet}
 	</SortableList>
 </div>

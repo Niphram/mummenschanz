@@ -102,36 +102,38 @@
 
 				<div class="flex flex-col items-center justify-center">
 					<table class="m-0 w-min border-separate border-spacing-2 p-0 align-middle">
-						<tr>
-							<td class="m-0 p-0 text-right">
-								<button
-									on:click={() => ($c.physical_stress = 0)}
-									class="btn btn-ghost btn-md h-auto min-h-0 w-min p-2 text-end"
-								>
-									{$t('fate_condensed.physical')}
-								</button>
-							</td>
-							<td class="m-0 p-0">
-								<div class="flex flex-row align-middle">
-									<StressMeter bind:value={$c.physical_stress} max={$c.physical_stress_max} />
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td class="m-0 p-0 text-right">
-								<button
-									on:click={() => ($c.mental_stress = 0)}
-									class="btn btn-ghost btn-md h-auto min-h-0 w-min p-2 text-end"
-								>
-									{$t('fate_condensed.mental')}
-								</button>
-							</td>
-							<td class="m-0 p-0">
-								<div class="flex flex-row align-middle">
-									<StressMeter bind:value={$c.mental_stress} max={$c.mental_stress_max} />
-								</div>
-							</td>
-						</tr>
+						<tbody>
+							<tr>
+								<td class="m-0 p-0 text-right">
+									<button
+										on:click={() => ($c.physical_stress = 0)}
+										class="btn btn-ghost btn-md h-auto min-h-0 w-min p-2 text-end"
+									>
+										{$t('fate_condensed.physical')}
+									</button>
+								</td>
+								<td class="m-0 p-0">
+									<div class="flex flex-row align-middle">
+										<StressMeter bind:value={$c.physical_stress} max={$c.physical_stress_max} />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="m-0 p-0 text-right">
+									<button
+										on:click={() => ($c.mental_stress = 0)}
+										class="btn btn-ghost btn-md h-auto min-h-0 w-min p-2 text-end"
+									>
+										{$t('fate_condensed.mental')}
+									</button>
+								</td>
+								<td class="m-0 p-0">
+									<div class="flex flex-row align-middle">
+										<StressMeter bind:value={$c.mental_stress} max={$c.mental_stress_max} />
+									</div>
+								</td>
+							</tr>
+						</tbody>
 					</table>
 
 					<TextInput
@@ -170,7 +172,7 @@
 			</div>
 		</div>
 
-		<div class="divider divider-horizontal hidden md:flex" />
+		<div class="divider divider-horizontal hidden md:flex"></div>
 
 		<div class="flex flex-grow flex-col justify-start">
 			<div class="flex flex-col gap-2">

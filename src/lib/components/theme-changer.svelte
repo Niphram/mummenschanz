@@ -1,4 +1,6 @@
 <script lang="ts" context="module">
+	// TODO: Migrate
+
 	import { browser } from '$app/environment';
 	import { readonly, writable } from 'svelte/store';
 

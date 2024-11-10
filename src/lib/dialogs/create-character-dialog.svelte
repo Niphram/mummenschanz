@@ -19,7 +19,7 @@
 
 		<div class="flex h-full flex-col gap-2">
 			{#each Object.keys(SYSTEM_MAP) as system}
-				<button class="btn btn-primary" on:click={() => createAndOpenCharacter(system)}>
+				<button class="btn btn-primary" onclick={() => createAndOpenCharacter(system)}>
 					{$t(`${system}.system_name`)}
 				</button>
 			{/each}

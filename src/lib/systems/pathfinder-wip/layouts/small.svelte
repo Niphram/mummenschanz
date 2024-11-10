@@ -55,7 +55,7 @@
 
 			<Divider>
 				Inventory
-				<button on:click={() => ($c.items.push(new Item()), ($c = $c))}>ADD</button>
+				<button onclick={() => ($c.items.push(new Item()), ($c = $c))}>ADD</button>
 			</Divider>
 			<Inventory />
 		</div>
