@@ -17,7 +17,7 @@
 	>ADD ATTACK (WIP)</button
 >
 
-<div class="grid-cols-[min-content repeat(4, auto)] grid w-full grid-flow-row justify-stretch">
+<div class="grid w-full grid-flow-row grid-cols-[min-content_repeat(4,auto)] justify-stretch">
 	<div class="col-span-5 grid grid-cols-subgrid text-center text-xs text-neutral-500">
 		<div></div>
 		<div>Name</div>

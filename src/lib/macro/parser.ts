@@ -257,34 +257,52 @@ FACTOR.setPattern(lrec_sc(TERM, seq(alt(str('*'), str('/')), TERM), applyBinary)
 EXP.setPattern(lrec_sc(FACTOR, seq(alt(str('+'), str('-')), FACTOR), applyBinary));
 
 export function parse(expr: string): Node {
+	let tokens: ParsecToken<TokenKind> | undefined;
 	try {
-		return expectSingleResult(expectEOF(EXP.parse(tokenize(expr))));
+		tokens = tokenize(expr);
+	} catch (err) {
+		if (isTokenError(err)) {
+			return errorNode({
+				message: 'Unknown token',
+				startIdx: err.pos?.index,
+			});
+		} else {
+			return errorNode({
+				message: 'Unknown error',
+			});
+		}
+	}
+
+	try {
+		return expectSingleResult(expectEOF(EXP.parse(tokens)));
 	} catch (err) {
 		if (isTokenRangeError(err)) {
-			return {
-				type: NodeType.Error,
+			return errorNode({
 				message: err.errorMessage,
 
 				start: err.first,
 				end: err.next,
 
-				startIdx: err.first?.index ?? 0,
+				startIdx: err.first?.index,
 				endIdx: err.next?.index,
-			};
+			});
 		} else if (isTokenError(err)) {
-			return {
-				type: NodeType.Error,
-				message: err.errorMessage,
-				startIdx: err.pos?.index ?? 0,
-			};
+			return errorNode({
+				message: 'Parsing error',
+				startIdx: err.pos?.index,
+			});
 		} else {
-			return {
-				type: NodeType.Error,
-				message: 'Unknown error',
-				startIdx: 0,
-			};
+			return errorNode({ message: 'Unknown error', startIdx: 0 });
 		}
 	}
+}
+
+function errorNode(props: Partial<Omit<ErrorNode, 'type'>> & { message: string }): ErrorNode {
+	return {
+		type: NodeType.Error,
+		...props,
+		startIdx: props.startIdx ?? 0,
+	};
 }
 
 function isTokenError(err: unknown): err is TokenError {

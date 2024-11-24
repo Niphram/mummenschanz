@@ -59,7 +59,7 @@
 				{@const error = current.slice(parsedNode.startIdx, parsedNode.endIdx)}
 				{@const suffix = parsedNode.endIdx && current.slice(parsedNode.endIdx)}
 
-				Error: "<span class="font-mono text-opacity-50">{prefix || ''}</span><span
+				{parsedNode.message}: "<span class="font-mono text-opacity-50">{prefix || ''}</span><span
 					class="font-mono font-bold text-error underline decoration-dashed">{error}</span
 				><span class="font-mono text-opacity-50">{suffix || ''}</span>"
 			{:else}

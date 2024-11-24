@@ -1,6 +1,33 @@
 export const pathfinder_wip = {
 	system_name: 'Pathfinder (WIP)',
 
+	ability: {
+		str: {
+			full: 'Strength',
+			abbr: 'str',
+		},
+		dex: {
+			full: 'Dexterity',
+			abbr: 'dex',
+		},
+		con: {
+			full: 'Constitution',
+			abbr: 'con',
+		},
+		int: {
+			full: 'Intelligence',
+			abbr: 'int',
+		},
+		wis: {
+			full: 'Wisdom',
+			abbr: 'wis',
+		},
+		cha: {
+			full: 'Charisma',
+			abbr: 'cha',
+		},
+	},
+
 	skills: {
 		acrobatics: 'Acrobatics',
 		appraise: 'Appraise',
@@ -37,6 +64,25 @@ export const pathfinder_wip = {
 		survival: 'Survival',
 		swim: 'Swim',
 		useMagicDevice: 'Use Magic Device',
+	},
+
+	magic: {
+		castingType: {
+			prepared: 'Prepared Casting',
+			spontaneous: 'Spontaneous Casting',
+		},
+		spellLevel: {
+			level_0: 'Level 0',
+			level_1: 'Level 1',
+			level_2: 'Level 2',
+			level_3: 'Level 3',
+			level_4: 'Level 4',
+			level_5: 'Level 5',
+			level_6: 'Level 6',
+			level_7: 'Level 7',
+			level_8: 'Level 8',
+			level_9: 'Level 9',
+		},
 	},
 
 	persona: {
