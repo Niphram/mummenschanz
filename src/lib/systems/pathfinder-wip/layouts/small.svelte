@@ -5,6 +5,7 @@
 
 	import { char } from '../context';
 	import { Item } from '../data/item';
+	import Combat from '../sections/combat.svelte';
 	import Hp from '../sections/hp.svelte';
 	import Inventory from '../sections/inventory.svelte';
 	import Persona from '../sections/persona.svelte';
@@ -31,6 +32,18 @@
 			<Divider>Abilities</Divider>
 			<div class="grid grid-flow-row grid-cols-3 gap-2">
 				<AbilityButtons />
+			</div>
+		</div>
+
+		<!--Combat-->
+		<div
+			id="combat"
+			class="flex-col, flex w-full flex-none snap-center snap-always items-stretch gap-2 overflow-y-scroll"
+		>
+			<Divider>Combat</Divider>
+
+			<div class="flex flex-col gap-2">
+				<Combat />
 			</div>
 		</div>
 

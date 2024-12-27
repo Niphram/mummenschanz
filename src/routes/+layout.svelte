@@ -6,6 +6,7 @@
 
 	import DialogProvider from '$lib/components/dialog-provider.svelte';
 	import ThemeChanger from '$lib/components/theme-changer.svelte';
+	import Manifest from '$lib/pwa/manifest.svelte';
 
 	interface Props {
 		children?: Snippet;
@@ -24,6 +25,8 @@
 		});
 	});
 </script>
+
+<Manifest />
 
 <div class="contents select-none">
 	<ThemeChanger>
