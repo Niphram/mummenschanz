@@ -13,7 +13,3 @@ export abstract class Serializable {
 	abstract [SERIALIZE](): JsonDataTypes;
 	abstract [DESERIALIZE](data: unknown): void;
 }
-
-function serialize(obj: Serializable): JsonDataTypes {
-	return obj[SERIALIZE]();
-}
