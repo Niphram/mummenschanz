@@ -1,7 +1,7 @@
 import { autoserialize, autoserializeAs, serialize } from 'cerialize';
 import { nanoid } from 'nanoid';
 
-import type { SYSTEM_MAP } from '.';
+import type { SYSTEM_MAP } from './index';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type CharacterMigrationFn = (data: any) => any;

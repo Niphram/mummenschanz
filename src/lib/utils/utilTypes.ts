@@ -37,3 +37,5 @@ export type Get<T, P extends Paths<T>> =
 			Get<Index<T, Key>, Rest>
 		:	never
 	:	Index<T, P>;
+
+export type IsOptional<T, O extends boolean> = O extends true ? T | undefined : T;
